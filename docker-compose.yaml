@@ -1,0 +1,41 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www
+      - vendor:/var/www/vendor
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    command: ["sh", "-c", "/usr/local/bin/wait-for-it.sh db -- /usr/local/bin/init.sh && apache2-foreground"]
+
+  db:
+    image: mysql:8.0
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8081:80"
+    env_file:
+      - .env
+
+  npm:
+    build: .
+    volumes:
+      - .:/var/www
+    working_dir: /var/www
+    command: [ "npm", "run", "watch" ]
+
+volumes:
+  vendor:
