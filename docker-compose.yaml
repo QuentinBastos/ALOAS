@@ -2,21 +2,25 @@ services:
   web:
     build: .
     ports:
-      - "8080:80"
+      - "80:80"
     volumes:
-      - .:/var/www
-      - vendor:/var/www/vendor
+      - .:/var/www/html
+      - vendor:/var/www/html/vendor
     depends_on:
       db:
         condition: service_healthy
-    env_file:
-      - .env
+    environment:
+      MYSQL_DATABASE: Aloas
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     command: ["sh", "-c", "/usr/local/bin/wait-for-it.sh db -- /usr/local/bin/init.sh && apache2-foreground"]
 
   db:
-    image: mysql:8.0
-    env_file:
-      - .env
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: Aloas
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s
@@ -27,14 +31,16 @@ services:
     image: phpmyadmin/phpmyadmin
     ports:
       - "8081:80"
-    env_file:
-      - .env
+    environment:
+      PMA_HOST: db
+      MYSQL_DATABASE: Aloas
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
 
   npm:
     build: .
     volumes:
-      - .:/var/www
-    working_dir: /var/www
+      - .:/var/www/html
+    working_dir: /var/www/html
     command: [ "npm", "run", "watch" ]
 
 volumes:

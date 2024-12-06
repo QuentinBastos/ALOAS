@@ -5,8 +5,13 @@ until mysql -h db -u root -e "SELECT 1"; do
   sleep 1
 done
 
-
 mysql -h db -u root -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;"
 
-cd /var/www || exit
-php bin/console doctrine:migrations:migrate --no-interaction
+cd /var/www
+
+if [ -d "migrations" ]; then
+  php bin/console doctrine:migrations:migrate --no-interaction
+else
+  php bin/console doctrine:database:create
+  echo "Migrations directory does not exist. Skipping migrations."
+fi

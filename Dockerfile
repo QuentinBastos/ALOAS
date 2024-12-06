@@ -9,39 +9,55 @@ RUN apt-get update && apt-get install -y \
   default-mysql-client \
   nano \
   dos2unix \
-  curl
+  curl && \
+  apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
+# Install Node.js and npm
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install -y curl && \
+    curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
     apt-get install -y nodejs
 
+# Upgrade npm to the latest version
+RUN npm install -g npm
+
+# Install PHP extensions
 RUN docker-php-ext-install pdo pdo_mysql zip gd
 
+# Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-COPY config/apache/apache.conf /etc/apache2/sites-available/000-default.conf
+# Install Symfony Webpack Encore globally
+RUN npm install -g @symfony/webpack-encore
 
-WORKDIR /var/www
+# Set working directory
+WORKDIR /var/www/html
+
+COPY . /var/www/html
+
+RUN rm -rf /var/www/html/vendor
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --optimize-autoloader
 
-RUN chown -R www-data:www-data /var/www/var /var/www/public && \
-    chmod -R 775 /var/www/var /var/www/public
-
-COPY wait-for-it.sh /usr/local/bin/wait-for-it.sh
-RUN chmod +x /usr/local/bin/wait-for-it.sh
-
-COPY init.sh /usr/local/bin/init.sh
-RUN chmod +x /usr/local/bin/init.sh
+RUN npm install
 
 RUN npm run build
 
-RUN dos2unix /usr/local/bin/wait-for-it.sh /usr/local/bin/init.sh
+RUN chown -R www-data:www-data /var/www/html/var /var/www/html/public && \
+    chmod -R 775 /var/www/html/var /var/www/html/public
 
-# Expose port 80
+COPY wait-for-it.sh /usr/local/bin/wait-for-it.sh
+COPY init.sh /usr/local/bin/init.sh
+
+RUN chmod +x /usr/local/bin/wait-for-it.sh /usr/local/bin/init.sh && \
+    dos2unix /usr/local/bin/wait-for-it.sh /usr/local/bin/init.sh
+
+COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
+
+RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
+
 EXPOSE 80
-
-RUN sed -i 's!/var/www/html!/var/www/public!g' /etc/apache2/sites-available/000-default.conf
 
 CMD ["apache2-foreground"]
