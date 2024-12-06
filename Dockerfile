@@ -29,8 +29,6 @@ COPY package.json package-lock.json ./
 
 RUN npm install
 
-RUN npm install -g @symfony/webpack-encore
-
 COPY . /var/www/html
 
 RUN rm -rf /var/www/html/vendor
