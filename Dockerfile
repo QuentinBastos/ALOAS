@@ -12,26 +12,24 @@ RUN apt-get update && apt-get install -y \
   curl && \
   apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install Node.js and npm
 RUN apt-get update && apt-get upgrade -y && \
     apt-get install -y curl && \
     curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
     apt-get install -y nodejs
 
-# Upgrade npm to the latest version
 RUN npm install -g npm
 
-# Install PHP extensions
 RUN docker-php-ext-install pdo pdo_mysql zip gd
 
-# Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-# Install Symfony Webpack Encore globally
-RUN npm install -g @symfony/webpack-encore
-
-# Set working directory
 WORKDIR /var/www/html
+
+COPY package.json package-lock.json ./
+
+RUN npm install
+
+RUN npm install -g @symfony/webpack-encore
 
 COPY . /var/www/html
 
@@ -40,8 +38,6 @@ RUN rm -rf /var/www/html/vendor
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --optimize-autoloader
-
-RUN npm install
 
 RUN npm run build
 
