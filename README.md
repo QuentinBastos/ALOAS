@@ -22,13 +22,13 @@ docker-compose exec web npm run watch
 ## Database
 The database is managed by phpmyadmin. You can access it at the following address:
 ```bash
-http://localhost:8081
+http://127.0.0.1:8081
 ```
 
 ## Website
 The website is available at the following address:
 ```bash
-http://localhost
+http://127.0.0.1:80
 ```
 
 ## Technologies used
