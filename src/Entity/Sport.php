@@ -15,6 +15,9 @@ class Sport
     #[ORM\Column(type: 'integer')]
     private int $id;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $name;
+
     #[ORM\OneToMany(targetEntity: Tournament::class, mappedBy: 'sport')]
     private Collection $tournaments;
 
@@ -49,6 +52,16 @@ class Sport
             $this->tournaments->add($tournament);
             $tournament->setSport($this);
         }
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
     }
 
 }
