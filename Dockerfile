@@ -21,6 +21,7 @@ RUN npm install -g npm
 
 RUN docker-php-ext-install pdo pdo_mysql zip gd
 
+# Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
 WORKDIR /var/www/html

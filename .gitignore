@@ -1,4 +1,5 @@
-/.idea/
+/.idea
+/.idea/workspace.xml
 package-lock.json
 
 ###> symfony/framework-bundle ###
