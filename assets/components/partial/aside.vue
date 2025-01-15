@@ -1,12 +1,25 @@
 <template>
-  <div class=" bg-[#19864e] opacity-90 h-full py-2">
-    <div class="flex items-center justify-center w-full pb-2">
+  <div class=" bg-[--bg-green-light] opacity-90 h-full pb-2 shadow-md">
+    <div class="flex items-center justify-center w-full py-2.5 bg-[--bg-green-dark]">
       <h2 class="text-white font-bold">Gestion</h2>
     </div>
-    <ul class="text-white gap-4 divide-y border-t-2 border-b">
-      <li class="py-1.5 pl-2 hover:bg-[#b1e7b6] hover:text-[#19864e] transition-all">Accueil</li>
-      <li class="py-1.5 pl-2 hover:bg-[#b1e7b6] hover:text-[#19864e] transition-all">Classement</li>
-      <li class="py-1.5 pl-2 hover:bg-[#b1e7b6] hover:text-[#19864e] transition-all">Organiser</li>
+    <ul class="text-[--bg-green-light] font-medium gap-4 divide-y border-t-2 border-b">
+      <li class="flex py-2.5 pl-2 bg-white gap-2 hover:bg-[--bg-green-hover] transition-all">
+        <img :src="require('@img/icons/home.svg')" alt="home" width="12px">
+        <p>Accueil</p>
+      </li>
+      <li class="flex py-2.5 pl-2 bg-white gap-2 hover:bg-[--bg-green-hover] transition-all">
+        <img :src="require('@img/icons/cup.svg')" alt="cup" width="12px">
+        <p>Tournois</p>
+      </li>
+      <li class="flex py-2.5 pl-2 bg-white gap-2 hover:bg-[--bg-green-hover] transition-all">
+        <img :src="require('@img/icons/ranking.svg')" alt="ranking" width="12px">
+        <p>Classement</p>
+      </li>
+      <li class="flex py-2.5 pl-2 bg-white gap-2 hover:bg-[--bg-green-hover] transition-all">
+        <img :src="require('@img/icons/organise.svg')" alt="organise" width="12px">
+        <p>Organiser</p>
+      </li>
     </ul>
   </div>
 </template>

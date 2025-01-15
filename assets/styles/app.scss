@@ -2,7 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-//@layer base {
+@layer base {
+  :root {
+    --bg-root: #FFF7F5;
+    --bg-green-dark: #33694D;
+    --bg-green-mid: #418663;
+    --bg-green-light: #19864E;
+    --bg-green-hover: #E8FFEA;
+    --bg-brown-mid: #875B4E;
+  }
+}
 //  @font-face {
 //    font-family: "Luciole-Regular", cursive;
 //    font-weight: 400;

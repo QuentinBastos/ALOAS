@@ -4,11 +4,11 @@
       <p class="font-base text-sm">Pétanque</p>
     </div>
     <div class="flex items-center justify-around h-[95%]">
-      <img src="/build/img/team/bird.svg" class="h-full">
+      <img :src="require('@img/team/bird.svg')" alt="bird" class="h-full" />
       <p>3</p>
       <p>VS</p>
       <p>0</p>
-      <img src="/build/img/team/bird.svg" class="h-full">
+      <img :src="require('@img/team/bird.svg')" alt="bird" class="h-full" />
     </div>
   </div>
 </template>

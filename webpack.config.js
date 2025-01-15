@@ -6,7 +6,14 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
     Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
 }
 
+const path = require('path');
 Encore
+
+    .addAliases({
+        '@img': path.resolve(__dirname, 'assets/img'),
+    })
+    .enableVueLoader(() => {
+    }, {version: 3})
     // directory where compiled assets will be stored
     .setOutputPath('public/build/')
     // public path used by the web server to access the output path
@@ -55,13 +62,14 @@ Encore
 
     .copyFiles({
         from: './assets/img',
-        to: 'img/[path][name].[ext]'
+        to: 'img/[path][name].[hash:8].[ext]'
     })
 
-// enables Sass/SCSS support
-.enableSassLoader()
+    // enables Sass/SCSS support
+    .enableSassLoader()
 
-.enableVueLoader(() => {}, { version: 3 })
+    .enableVueLoader(() => {
+    }, {version: 3})
 
 // uncomment if you use TypeScript
 //.enableTypeScriptLoader()
