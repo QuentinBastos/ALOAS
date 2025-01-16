@@ -6,10 +6,19 @@
         </a>
         <div>
             <div class="flex">
-                <a href="{{ path('app_login') }}" class="flex items-center justify-center py-1 px-2 gap-2 cursor-pointer">
-                    <img src="{{ asset('build/images/icons/login.svg') }}" alt="account" width="16">
-                    <p class="text-md font-medium text-[#19864e]">Se connecter</p>
-                </a>
+                {% if app.user %}
+                    <a href="{{ path('app_logout') }}"
+                       class="flex items-center justify-center py-1 px-2 gap-2 cursor-pointer">
+                        <img src="{{ asset('build/images/icons/login.svg') }}" alt="account" width="16">
+                        <p class="text-md font-medium text-[#19864e]">Se déconnecter</p>
+                    </a>
+                {% else %}
+                    <a href="{{ path('app_login') }}"
+                       class="flex items-center justify-center py-1 px-2 gap-2 cursor-pointer">
+                        <img src="{{ asset('build/images/icons/login.svg') }}" alt="account" width="16">
+                        <p class="text-md font-medium text-[#19864e]">Se connecter</p>
+                    </a>
+                {% endif %}
                 <a class="flex items-center justify-center py-1 px-2 gap-2 cursor-pointer">
                     <img src="{{ asset('build/images/icons/login.svg') }}" alt="account" width="16">
                     <p class="text-md font-medium text-[#19864e]">Assistance</p>
