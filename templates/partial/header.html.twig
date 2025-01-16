@@ -1,23 +1,20 @@
-<div class="bg-[--bg-green-light] opacity-90 h-full pb-2 shadow-md">
-    <div class="flex items-center justify-center w-full py-2.5 bg-[--bg-green-dark]">
-        <h2 class="text-white font-bold">Gestion</h2>
+<nav class="shadow h-[9vh] flex items-center">
+    <div class="container mx-auto flex justify-between items-center">
+        <a href="{{ path('app_home') }}" class="flex items-center justify-center gap-2 cursor-pointer">
+            <img src="{{ asset('build/images/aloas-logo.png') }}" alt="Logo" class="h-[6vh]">
+            <h1 class="text-[#19864e] text-2xl font-bold">ALOAS</h1>
+        </a>
+        <div>
+            <div class="flex">
+                <a href="{{ path('app_login') }}" class="flex items-center justify-center py-1 px-2 gap-2 cursor-pointer">
+                    <img src="{{ asset('build/images/icons/login.svg') }}" alt="account" width="16">
+                    <p class="text-md font-medium text-[#19864e]">Se connecter</p>
+                </a>
+                <a class="flex items-center justify-center py-1 px-2 gap-2 cursor-pointer">
+                    <img src="{{ asset('build/images/icons/login.svg') }}" alt="account" width="16">
+                    <p class="text-md font-medium text-[#19864e]">Assistance</p>
+                </a>
+            </div>
+        </div>
     </div>
-    <ul class="text-[--bg-green-light] font-medium gap-4 divide-y border-t-2 border-b">
-        <li class="flex py-2.5 pl-2 bg-white gap-2 hover:bg-[--bg-green-hover] transition-all">
-            <img src="{{ asset('build/img/icons/home.svg') }}" alt="home" width="12px">
-            <p>Accueil</p>
-        </li>
-        <li class="flex py-2.5 pl-2 bg-white gap-2 hover:bg-[--bg-green-hover] transition-all">
-            <img src="{{ asset('icons/cup.svg') }}" alt="cup" width="12px">
-            <p>Tournois</p>
-        </li>
-        <li class="flex py-2.5 pl-2 bg-white gap-2 hover:bg-[--bg-green-hover] transition-all">
-            <img src="{{ asset('icons/ranking.svg') }}" alt="ranking" width="12px">
-            <p>Classement</p>
-        </li>
-        <li class="flex py-2.5 pl-2 bg-white gap-2 hover:bg-[--bg-green-hover] transition-all">
-            <img src="{{ asset('icons/organise.svg') }}" alt="organise" width="12px">
-            <p>Organiser</p>
-        </li>
-    </ul>
-</div>
+</nav>
