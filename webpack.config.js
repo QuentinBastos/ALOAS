@@ -27,6 +27,8 @@ Encore
      */
     .addEntry('app', './assets/app.js')
 
+    .addStyleEntry('app_css', './assets/styles/app.scss')
+
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
 
@@ -59,8 +61,9 @@ Encore
     })
 
     .copyFiles({
-        from: './assets/img',
-        to: 'img/[path][name].[hash:8].[ext]'
+        from: './assets/images',
+        to: 'images/[path][name].[hash:8].[ext]',
+        pattern: /\.(png|jpg|jpeg|svg|ico|webp)$/
     })
 
     // enables Sass/SCSS support

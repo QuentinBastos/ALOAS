@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% include 'partial/header.html.twig' %}
+    <div class="flex w-screen h-[91vh]">
+        {% include 'partial/aside.html.twig' with { 'class': 'w-1/6' } %}
+        <div class="w-5/6 flex flex-col items-center mt-8 text-xl font-medium">
+            <h1 class="text-[#19864e] mb-4">Derniers Match</h1>
+            <ul class="flex flex-col gap-4 w-full items-center overflow-y-scroll grid grid-cols-2 justify-center gap-8 px-12 pb-6">
+                {% for index in 1..10 %}
+                    <li class="h-[12.5vh]">
+                        {% include 'components/cardTournament.html.twig' %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('app_css') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
