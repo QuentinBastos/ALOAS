@@ -4,10 +4,12 @@
     {% include 'partial/header.html.twig' %}
     {% include 'partial/rightAside.html.twig' %}
     <div class="flex w-screen h-[91vh]">
-        {% include 'partial/aside.html.twig' %}
-        <div class="w-5/6 flex flex-col items-center mt-8 text-xl font-medium">
-            <h1 class="text-[#19864e] mb-4">Derniers Match</h1>
-            <ul class="flex flex-col gap-4 w-full items-center overflow-y-scroll grid grid-cols-2 justify-center gap-8 px-12 pb-6">
+        <aside id="sidebar" class="flex w-1/6 min-w-24">
+            {% include 'partial/aside.html.twig' %}
+        </aside>
+        <div class="w-5/6 flex flex-col items-center pt-6 text-xl font-medium overflow-y-scroll main-content">
+        <h1 class="text-[#19864e] mb-4">Derniers Match</h1>
+            <ul class="flex flex-col gap-4 w-full items-center grid lg:grid-cols-2 grid-cols-1 justify-center gap-8 px-12 pb-6">
                 {% for index in 1..10 %}
                     <li class="h-[12.5vh]">
                         {% include 'components/cardTournament.html.twig' %}

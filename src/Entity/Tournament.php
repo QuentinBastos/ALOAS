@@ -22,6 +22,12 @@ class Tournament
     #[ORM\OneToMany(targetEntity: Pool::class, mappedBy: 'tournament')]
     private Collection $pools;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $name;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $location;
+
     public function __construct()
     {
         $this->pools = new ArrayCollection();
@@ -63,5 +69,25 @@ class Tournament
             $this->pools->add($pool);
             $pool->setTournament($this);
         }
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function getLocation(): string
+    {
+        return $this->location;
+    }
+
+    public function setLocation(string $location): void
+    {
+        $this->location = $location;
     }
 }
