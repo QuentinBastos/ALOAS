@@ -1,23 +1,47 @@
-<div class="bg-[--bg-green-light] opacity-90 h-full pb-2 shadow-md w-1/6">
-    <div class="flex items-center justify-center w-full py-2.5 bg-[--bg-green-dark]">
-        <h2 class="text-white font-bold">Gestion</h2>
+<div class="aside">
+    <div class="insideAside">
+        <div class="h-[9vh] shadow">
+            <div class="flex items-center h-full w-full p-5 font-bold text-xl cursor-pointer">
+                <i class="fa-solid fa-chevron-right pr-3"></i>
+                Assistance
+            </div>
+        </div>
+        <div class="h-[91vh]">
+            <div class="shadow pl-5 pr-5 pt-2 pb-2 flex flex-col">
+                <span class="titleVideo">
+                    Vidéos
+                </span>
+                <a href="{{ path('app_video_all') }}" class="textVideo">
+                    <i class="fa-solid fa-video"></i>
+                    <span>Voir les vidéos d'explication</span>
+                </a>
+            </div>
+            <div class="shadow pl-5 pr-5 pt-2 pb-2 flex flex-col">
+                <span class="titleVideo">
+                    Créer un calendrier de tournois
+                </span>
+                <a href="{{ path('app_video_team') }}" class="textVideo">
+                    <i class="fa-solid fa-people-group"></i>
+                    <span>Ajouter des équipes</span>
+                </a>
+                <a href="{{ path('app_video_team') }}" class="textVideo">
+                    <i class="fa-solid fa-trophy"></i>
+                    <span>Créer un classement</span>
+                </a>
+                <a href="{{ path('app_video_team') }}" class="textVideo">
+                    <i class="fa-solid fa-arrow-trend-up"></i>
+                    <span>Traiter des scores</span>
+                </a>
+            </div>
+            <div class="shadow pl-5 pr-5 pt-2 pb-2 flex flex-col">
+                <span class="titleVideo">
+                    Plus d'aide
+                </span>
+                <a href="{{ path('app_video_help') }}" class="textVideo">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>Centre d'aide</span>
+                </a>
+            </div>
+        </div>
     </div>
-    <ul class="text-[--bg-green-light] font-medium gap-4 divide-y border-t-2 border-b cursor-pointer">
-        <li class="flex py-2.5 pl-2 bg-white gap-2 hover:bg-[--bg-green-hover] transition-all">
-            <img src="{{ asset('build/images/icons/home.svg') }}" alt="home" width="12px">
-            <p>Accueil</p>
-        </li>
-        <li class="flex py-2.5 pl-2 bg-white gap-2 hover:bg-[--bg-green-hover] transition-all">
-            <img src="{{ asset('build/images/icons/cup.svg') }}" alt="cup" width="12px">
-            <p>Tournois</p>
-        </li>
-        <li class="flex py-2.5 pl-2 bg-white gap-2 hover:bg-[--bg-green-hover] transition-all">
-            <img src="{{ asset('build/images/icons/ranking.svg') }}" alt="ranking" width="12px">
-            <p>Classement</p>
-        </li>
-        <li class="flex py-2.5 pl-2 bg-white gap-2 hover:bg-[--bg-green-hover] transition-all">
-            <img src="{{ asset('build/images/icons/organise.svg') }}" alt="organise" width="12px">
-            <p>Organiser</p>
-        </li>
-    </ul>
 </div>
