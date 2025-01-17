@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des tournois{% endblock %}
+
+{% block body %}
+    <h1>Liste des tournois</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Lieu</th>
+            <th>Sport</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for tournament in tournaments %}
+            <tr>
+                <td>{{ tournament.name }}</td>
+                <td>{{ tournament.location }}</td>
+                <td>{{ tournament.sport.name }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Aucun tournoi trouvé.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
