@@ -1,27 +1,38 @@
 <nav class="shadow h-[9vh] flex items-center">
-    <div class="container mx-auto flex justify-between items-center">
-        <a href="{{ path('app_home') }}" class="flex items-center justify-center gap-2 cursor-pointer">
-            <img src="{{ asset('build/images/aloas-logo.png') }}" alt="Logo" class="h-[6vh]">
-            <h1 class="text-[#19864e] text-2xl font-bold">ALOAS</h1>
-        </a>
+    <div class="container sm:mx-auto mx-4 flex justify-between items-center">
+        <div class="menu-burger flex items-center gap-4">
+            <div class="rounded-full hover:bg-[--bg-green-hover] cursor-pointer p-2">
+                <svg id="menu-burger"
+                     class="w-5 h-5 sm:hidden flex text-[--bg-green-dark]"
+                     aria-hidden="true"
+                     xmlns="http://www.w3.org/2000/svg" fill="--bg-green-dark" viewBox="0 0 17 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M1 1h15M1 7h15M1 13h15"/>
+                </svg>
+            </div>
+            <a href="{{ path('app_home') }}" class="flex items-center justify-center gap-2 cursor-pointer">
+                <img src="{{ asset('build/images/aloas-logo.png') }}" alt="Logo" class="h-[5vh]">
+                <h1 class="text-[#19864e] text-2xl font-bold">ALOAS</h1>
+            </a>
+        </div>
         <div>
             <div class="flex">
                 {% if app.user %}
                     <a href="{{ path('app_logout') }}"
                        class="flex items-center justify-center py-1 px-2 gap-2 cursor-pointer">
                         <img src="{{ asset('build/images/icons/login.svg') }}" alt="account" width="16">
-                        <p class="text-md font-medium text-[#19864e]">Se déconnecter</p>
+                        <p class=" sm:flex hidden text-md font-medium text-[#19864e]">Se déconnecter</p>
                     </a>
                 {% else %}
                     <a href="{{ path('app_login') }}"
                        class="flex items-center justify-center py-1 px-2 gap-2 cursor-pointer">
                         <img src="{{ asset('build/images/icons/login.svg') }}" alt="account" width="16">
-                        <p class="text-md font-medium text-[#19864e]">Se connecter</p>
+                        <p class="sm:flex hidden text-md font-medium text-[#19864e]">Se connecter</p>
                     </a>
                 {% endif %}
                 <a class="flex items-center justify-center py-1 px-2 gap-2 cursor-pointer">
                     <img src="{{ asset('build/images/icons/login.svg') }}" alt="account" width="16">
-                    <p class="text-md font-medium text-[#19864e]">Assistance</p>
+                    <p class="sm:flex hidden text-md font-medium text-[#19864e]">Assistance</p>
                 </a>
             </div>
         </div>
