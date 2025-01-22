@@ -21,13 +21,9 @@ class Pool
     #[ORM\OneToMany(targetEntity: Team::class, mappedBy: 'pool')]
     private Collection $teams;
 
-    #[ORM\OneToMany(targetEntity: Game::class, mappedBy: 'pool')]
-    private Collection $games;
-
     public function __construct()
     {
         $this->teams = new ArrayCollection();
-        $this->games = new ArrayCollection();
     }
 
     public function getId(): int
@@ -60,29 +56,12 @@ class Pool
         $this->teams = $teams;
     }
 
-    public function getGames(): Collection
-    {
-        return $this->games;
-    }
-
-    public function setGames(Collection $games): void
-    {
-        $this->games = $games;
-    }
 
     public function addTeam(Team $team): void
     {
         if (!$this->teams->contains($team)) {
             $this->teams->add($team);
             $team->setPool($this);
-        }
-    }
-
-    public function addGame(Game $game): void
-    {
-        if (!$this->games->contains($game)) {
-            $this->games->add($game);
-            $game->setPool($this);
         }
     }
 }

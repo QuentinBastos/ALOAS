@@ -18,13 +18,6 @@ class Team
     #[ORM\ManyToOne(targetEntity: Pool::class, inversedBy: 'teams')]
     private Pool $pool;
 
-    #[ORM\ManyToMany(targetEntity: Game::class, mappedBy: 'teams')]
-    private Collection $games;
-
-    public function __construct()
-    {
-        $this->games = new ArrayCollection();
-    }
 
     public function getId(): int
     {
@@ -44,30 +37,5 @@ class Team
     public function setPool(Pool $pool): void
     {
         $this->pool = $pool;
-    }
-
-    public function getGames(): Collection
-    {
-        return $this->games;
-    }
-
-    public function setGames(Collection $games): void
-    {
-        $this->games = $games;
-    }
-
-    public function addGame(Game $game): void
-    {
-        if (!$this->games->contains($game)) {
-            $this->games->add($game);
-            $game->addTeam($this);
-        }
-    }
-
-    public function removeGame(Game $game): void
-    {
-        if ($this->games->removeElement($game)) {
-            $game->removeTeam($this);
-        }
     }
 }
