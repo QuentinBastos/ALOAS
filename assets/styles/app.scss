@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "aside";
 
 @layer base {
   :root {
@@ -16,6 +17,11 @@
 .full-width {
   width: 100% !important;
 }
+
+.darker-background {
+  background-color: rgba(0, 0, 0, 0.5) !important; // Adjust the color and opacity as needed
+}
+
 
 //  @font-face {
 //    font-family: "Luciole-Regular", cursive;

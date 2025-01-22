@@ -28,6 +28,7 @@ Encore
     .addEntry('app', './assets/app.js')
 
     .addStyleEntry('app_css', './assets/styles/app.scss')
+    .addStyleEntry('aside_css', './assets/styles/aside.scss')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()

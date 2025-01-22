@@ -1,0 +1,42 @@
+@import "variables";
+
+.aside {
+  width: 310px;
+  flex-shrink: 0;
+}
+
+.titleVideo {
+  font-weight: 500;
+  color: $light-gray;
+}
+
+.textVideo {
+  padding: 0.8rem 1rem 0 1rem;
+  font-weight: 300;
+  color: $black;
+  & > i {
+    padding-right: 0.5rem;
+    color: $bg-green-dark;
+  }
+}
+
+.insideAside {
+  width: 310px;
+  border-left: 1px solid rgba(0, 0, 0, 0.12);
+  left: auto;
+  right: 0;
+  top: 0;
+  flex: 1 0 auto;
+  height: 100%;
+  display: flex;
+  outline: 0;
+  z-index: 1200;
+  position: fixed;
+  overflow-y: auto;
+  flex-direction: column;
+  -webkit-overflow-scrolling: touch;
+  color: rgba(0, 0, 0, 0.87);
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  background-color: #fff;
+  box-shadow: none;
+}
