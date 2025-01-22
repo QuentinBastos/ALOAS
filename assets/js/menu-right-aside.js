@@ -1,22 +1,21 @@
-ocument.addEventListener('DOMContentLoaded', () => {
-    console.log('menu-right-aside.js');
-    const helpAside = document.getElementById('helpAside');
+document.addEventListener('DOMContentLoaded', () => {
+    const helpAside = document.getElementById('rightAside');
     const buttonInsideAside = document.getElementById('buttonAside');
-    const sidebar = document.getElementById('rightAside');
+    const buttonClose = document.getElementById('buttonClose');
 
-    if (helpAside && sidebar && buttonInsideAside) {
-        helpAside.addEventListener('click', () => {
-            if (sidebar.classList.contains('hidden')) {
-                sidebar.classList.remove('hidden');
+    if (helpAside && buttonInsideAside) {
+        buttonClose.addEventListener('click', () => {
+            if (helpAside.classList.contains('hidden')) {
+                helpAside.classList.remove('hidden');
             } else {
-                sidebar.classList.add('hidden');
+                helpAside.classList.add('hidden');
             }
         });
         buttonInsideAside.addEventListener('click', () => {
-            if (sidebar.classList.contains('hidden')) {
-                sidebar.classList.remove('hidden');
+            if (helpAside.classList.contains('hidden')) {
+                helpAside.classList.remove('hidden');
             } else {
-                sidebar.classList.add('hidden');
+                helpAside.classList.add('hidden');
             }
         });
     }
