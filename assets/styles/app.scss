@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
+@layer utilities  {
   :root {
     --bg-root: #FFF7F5;
     --bg-green-dark: #33694D;
@@ -11,10 +11,11 @@
     --bg-green-hover: #E8FFEA;
     --bg-brown-mid: #875B4E;
   }
-}
 
-.full-width {
-  width: 100% !important;
+
+  .full-width {
+    width: 100% !important;
+  }
 }
 
 //  @font-face {

@@ -2,16 +2,30 @@
 
 {% block body %}
     {% include 'partial/header.html.twig' %}
-    <div class="flex w-screen h-[91vh]">
+    <div class="flex w-screen h-[91vh] ">
         <aside id="sidebar" class="flex w-1/6 min-w-24">
             {% include 'partial/aside.html.twig' %}
         </aside>
-        <div class="w-5/6 flex flex-col items-center pt-6 text-xl font-medium overflow-y-scroll main-content">
-        <h1 class="text-[#19864e] mb-4">Derniers Match</h1>
+        <div class="
+        w-5/6 container mx-auto flex flex-col items-center pt-6 text-xl font-medium overflow-y-scroll main-content">
+            <div class="flex w-full justify-between px-8 pb-14">
+                <a href="{{ path('app_tournament_add') }}" class="flex bg-[--bg-green-light] items-center justify-center
+                 gap-4 rounded px-2 py-1 text-white text-base">
+                    <img src="{{ asset('build/images/icons/cupWhite.svg') }}" alt="ajout tournois" width="14px" >
+                    <p>Créer un tournois</p>
+                </a>
+                <h1 class="flex items-center text-[#19864e] ">Derniers Match</h1>
+                <a href="{{ path('app_tournament_add') }}" class="flex bg-[--bg-green-light] items-center justify-center
+                 gap-4 rounded px-2 py-1 text-white text-base">
+                    <img src="{{ asset('build/images/icons/cupWhite.svg') }}" alt="ajout tournois" width="14px" >
+                    <p>Créer tournois</p>
+                </a>
+            </div>
+
             <ul class="flex flex-col gap-4 w-full items-center grid lg:grid-cols-2 grid-cols-1 justify-center gap-8 px-12 pb-6">
                 {% for index in 1..10 %}
                     <li class="h-[12.5vh]">
-                        {% include 'components/cardTournament.html.twig' %}
+                        {% include 'components/cardMatch.html.twig' %}
                     </li>
                 {% endfor %}
             </ul>

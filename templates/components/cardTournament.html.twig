@@ -1,12 +1,13 @@
-<div class="h-full w-auto flex flex-col border-2 rounded shadow py-2">
-    <div class="h-[5%] w-full flex items-center justify-center">
-        <p class="font-base text-sm">Pétanque</p>
-    </div>
-    <div class="flex items-center justify-around h-[95%]">
-        <img src="{{ asset('build/images/team/bird.svg') }}" alt="bird" class="h-full" />
-        <p>3</p>
-        <p>VS</p>
-        <p>0</p>
-        <img src="{{ asset('build/images/team/bird.svg') }}" alt="bird" class="h-full" />
+<div class="flex flex-col border-2 rounded shadow-md py-2 aspect-square items-center cursor-pointer border-neutral-300
+    hover:scale-110 transition-transform duration-200">
+    <h2 class="text-lg font-bold h-[20%]">{{ name }}</h2>
+
+    <img src="{{ asset('build/images/tournament/' ~ sportName ~ '.png') }}"
+         alt="{{ sportName }} image"
+         class="h-[50%]">
+
+    <div class="flex flex-col items-center h-[30%] justify-end">
+        <p class="text-gray-600">{{ location }}</p>
+        <p class="text-sm italic">{{ sportName }}</p>
     </div>
 </div>
