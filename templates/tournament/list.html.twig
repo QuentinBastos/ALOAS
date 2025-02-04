@@ -2,6 +2,7 @@
 
 {% block body %}
     {% include 'partial/header.html.twig' %}
+    {% include 'partial/rightAside.html.twig' %}
     <div class="flex w-screen h-[91vh] ">
         <aside id="sidebar" class="flex w-1/6 min-w-24">
             {% include 'partial/aside.html.twig' %}
@@ -44,7 +45,7 @@
 
 
 {% block stylesheets %}
-    {{ encore_entry_link_tags('app_css') }}
+    {{ parent() }}
 
     <style>
         select {
@@ -64,12 +65,12 @@
     {{ encore_entry_script_tags('app') }}
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const selectElement = document.querySelector('.auto-submit-form');
+        document.addEventListener("DOMContentLoaded", function () {
+            const sportSelect = document.querySelector("select[name='tournament_filter[sports]']");
 
-            if (selectElement) {
-                selectElement.addEventListener('change', function () {
-                    selectElement.closest('form').submit();
+            if (sportSelect) {
+                sportSelect.addEventListener("change", function () {
+                    this.form.submit();
                 });
             }
         });

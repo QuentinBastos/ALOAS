@@ -1,0 +1,59 @@
+.step-icon {
+  fill: #28a74542;
+  transition: fill 0.3s ease;
+}
+
+.step-icon.active {
+  fill: #28a745;
+}
+
+
+.step-icon.active {
+  stroke: #28a745;
+}
+
+.step-icon path {
+  fill: #b0b0b0;
+}
+
+.step-icon.active path {
+  fill: #28a745;
+}
+
+label {
+  font-size: 0.75rem !important;
+  line-height: 1rem !important;
+}
+
+input {
+  border-bottom: 2px solid gray;
+  outline: none;
+  box-shadow: none;
+  padding: 4px;
+
+  &:focus {
+    border-bottom: 2px solid $bg-green-light;
+  }
+}
+
+select {
+  appearance: none;
+  border-bottom: 1px solid gray;
+  outline: none;
+  padding: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24' fill='%23333'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px;
+  padding-right: 30px;
+
+  &:focus {
+    border-bottom: 2px solid $bg-green-light;
+  }
+}
+
+section {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}

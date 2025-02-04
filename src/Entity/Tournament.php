@@ -28,6 +28,9 @@ class Tournament
     #[ORM\Column(type: 'string', length: 255)]
     private string $location;
 
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?\DateTime $date = null;
+
     public function __construct()
     {
         $this->pools = new ArrayCollection();
@@ -62,6 +65,17 @@ class Tournament
     {
         $this->pools = $pools;
     }
+
+    public function setDate(\DateTime $date): void
+    {
+        $this->date = $date;
+    }
+
+    public function getDate(): \DateTime
+    {
+        return $this->date;
+    }
+
 
     public function addPool(Pool $pool): void
     {

@@ -30,6 +30,7 @@ class TournamentController extends AbstractController
             $tournament->setName($data['name']);
             $tournament->setLocation($data['location']);
             $tournament->setSport($data['sport']);
+            $tournament->setDate($data['date']);
 
             $entityManager->persist($tournament);
             $entityManager->flush();

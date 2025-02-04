@@ -3,11 +3,92 @@
 {% block title %}Créer un tournoi{% endblock %}
 
 {% block body %}
-    <h1>Créer un tournoi</h1>
+    {% include 'partial/header.html.twig' %}
+    {% include 'partial/rightAside.html.twig' %}
+    <div class="w-screen h-[91vh] flex items-center justify-center ">
+        <section class="container mx-auto max-w-[340px] max-h-[380px] h-3/4 rounded-lg flex flex-col">
+            <div class="rounded-t">
+                <div class="w-full flex pb-4">
+                    <svg class="step-icon rounded-tl-lg active" viewBox="0 0 30 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="30" height="2" />
+                    </svg>
+                    <svg class="step-icon" viewBox="0 0 30 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="30" height="2" />
+                    </svg>
+                    <svg class="step-icon rounded-tr-lg" viewBox="0 0 30 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="30" height="2"/>
+                    </svg>
+                </div>
+                <h1 class="px-4 h-[30%] font-bold text-xl pb-4">Créer un tournoi</h1>
+                <p class="px-4 text-sm step-text" style="display: flex;">Toutes les données peuvent être modifiées ultérieurement.</p>
+                <p class="px-4 text-sm step-text" style="display: none;">Inscrivez le nom du club, du parc sportif ou de la salle.</p>
+                <p class="px-4 text-sm step-text" style="display: none;">Choisissez un sport de la liste.</p>
+            </div>
 
-    {{ form_start(form) }}
-    {{ form_row(form.name) }}
-    {{ form_row(form.location) }}
-    {{ form_row(form.sport) }}
-    {{ form_end(form) }}
+            {{ form_start(form, {'attr': {'class': 'h-full flex flex-col pb-4'}}) }}
+
+            <div id="tournamentForm" class="px-4 h-full flex flex-col justify-between">
+
+                <!-- Step 1 -->
+                <div class="form-step h-full flex flex-col justify-between" id="step-1" style="display: flex;">
+                    <div class="h-full flex flex-col justify-between">
+                        <div class="flex flex-col gap-6 mt-4">
+                            {{ form_row(form.name) }}
+                            {{ form_row(form.date) }}
+                        </div>
+                        <div class="w-full flex font-medium justify-end gap-2">
+                            <a href="{{ path('app_tournament_list') }}" class="opacity-70 flex bg-slate-300 items-center justify-center w-1/4
+                    gap-4 rounded px-2 text-sm py-1 ">
+                                <p class="text-slate-500">Annuler</p>
+                            </a>
+                            <button class="flex bg-[--bg-green-light] text-white items-center justify-center w-1/4
+                    gap-4 rounded px-2 text-sm py-1 " type="button" id="next-step-1">Suivant</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="form-step h-full flex flex-col justify-between" id="step-2" style="display: none;">
+                    <div class="h-full flex flex-col justify-between">
+                        <div class="flex flex-col gap-6 mt-4">
+                            {{ form_row(form.location) }}
+                        </div>
+                        <div class="w-full flex font-medium justify-end gap-2">
+                            <button class="opacity-70 flex bg-slate-300 items-center justify-center w-1/4
+                    gap-4 rounded px-2 text-sm py-1 " type="button" id="prev-step-2">Précédent</button>
+                            <button class="flex bg-[--bg-green-light] text-white items-center justify-center w-1/4
+                    gap-4 rounded px-2 text-sm py-1 " type="button" id="next-step-2">Suivant</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3 (Final Step) -->
+                <div class="form-step h-full flex flex-col justify-between" id="step-3" style="display: none;">
+                    <div class="h-full flex flex-col justify-between">
+                        <div class="flex flex-col gap-6 mt-4">
+                            {{ form_row(form.sport) }}
+                        </div>
+                        <div class="w-full flex font-medium justify-end gap-2">
+                            <button class="opacity-70 flex bg-slate-300 items-center justify-center w-1/4
+                    gap-4 rounded px-2 text-sm py-1 " type="button" id="prev-step-3">Précédent</button>
+                            <button class="flex bg-[--bg-green-light] text-white items-center justify-center w-1/4
+                    gap-4 rounded px-2 text-sm py-1 " type="submit">Envoyer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{ form_end(form) }}
+
+        </section>
+    </div>
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
 {% endblock %}
