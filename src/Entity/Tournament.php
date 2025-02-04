@@ -19,8 +19,8 @@ class Tournament
     #[ORM\ManyToOne(targetEntity: Sport::class, inversedBy: 'tournaments')]
     private Sport $sport;
 
-    #[ORM\OneToMany(targetEntity: Pool::class, mappedBy: 'tournament')]
-    private Collection $pools;
+    #[ORM\OneToMany(targetEntity: TeamMatchResult::class, mappedBy: 'tournament')]
+    private Collection $teamMatchResult;
 
     #[ORM\Column(type: 'string', length: 255)]
     private string $name;
@@ -30,7 +30,7 @@ class Tournament
 
     public function __construct()
     {
-        $this->pools = new ArrayCollection();
+        $this->teamMatchResult = new ArrayCollection();
     }
 
     public function getId(): int
@@ -53,20 +53,20 @@ class Tournament
         $this->sport = $sport;
     }
 
-    public function getPools(): Collection
+    public function getTeamMatchResult(): Collection
     {
-        return $this->pools;
+        return $this->teamMatchResult;
     }
 
-    public function setPools(Collection $pools): void
+    public function setTeamMatchResult(Collection $teamMatchResult): void
     {
-        $this->pools = $pools;
+        $this->teamMatchResult = $teamMatchResult;
     }
 
-    public function addPool(Pool $pool): void
+    public function addTeamMatchResult(TeamMatchResult $pool): void
     {
-        if (!$this->pools->contains($pool)) {
-            $this->pools->add($pool);
+        if (!$this->teamMatchResult->contains($pool)) {
+            $this->teamMatchResult->add($pool);
             $pool->setTournament($this);
         }
     }

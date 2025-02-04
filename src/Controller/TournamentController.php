@@ -5,11 +5,8 @@ namespace App\Controller;
 use App\Entity\Tournament;
 use App\Form\TournamentFilterType;
 use App\Form\TournamentType;
-use App\Entity\Sport;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,8 +14,15 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/tournament')]
 class TournamentController extends AbstractController
 {
+
+    public function __construct(
+        private readonly EntityManagerInterface $em,
+    )
+    {
+    }
+
     #[Route('/add', name: 'app_tournament_add')]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request): Response
     {
         $form = $this->createForm(TournamentType::class);
 
@@ -31,8 +35,8 @@ class TournamentController extends AbstractController
             $tournament->setLocation($data['location']);
             $tournament->setSport($data['sport']);
 
-            $entityManager->persist($tournament);
-            $entityManager->flush();
+            $this->em->persist($tournament);
+            $this->em->flush();
 
             $this->addFlash('success', 'Tournoi créé avec succès !');
 
@@ -44,7 +48,7 @@ class TournamentController extends AbstractController
         ]);
     }
     #[Route('/list', name: 'app_tournament_list')]
-    public function list(Request $request, EntityManagerInterface $entityManager): Response
+    public function list(Request $request): Response
     {
         $form = $this->createForm(TournamentFilterType::class);
 
@@ -53,11 +57,11 @@ class TournamentController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $selectedSports = $form->get('sports')->getData();
 
-            $tournaments = $entityManager->getRepository(Tournament::class)->findBy([
+            $tournaments = $this->em->getRepository(Tournament::class)->findBy([
                 'sport' => $selectedSports,
             ]);
         } else {
-            $tournaments = $entityManager->getRepository(Tournament::class)->findAll();
+            $tournaments = $this->em->getRepository(Tournament::class)->findAll();
         }
 
         return $this->render('tournament/list.html.twig', [
