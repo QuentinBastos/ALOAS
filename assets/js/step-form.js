@@ -22,26 +22,38 @@ document.addEventListener("DOMContentLoaded", function() {
             text.style.display = index === stepIndex ? 'block' : 'none';
         });
     };
+    const nextStep1 = document.getElementById("next-step-1");
+    const prevStep2 = document.getElementById("prev-step-2");
+    const nextStep2 = document.getElementById("next-step-2");
+    const prevStep3 = document.getElementById("prev-step-3");
 
-    document.getElementById("next-step-1").addEventListener("click", () => {
-        currentStep = 1;
-        showStep(currentStep);
-    });
+    if (nextStep1) {
+        nextStep1.addEventListener("click", () => {
+            currentStep = 1;
+            showStep(currentStep);
+        });
+    }
 
-    document.getElementById("prev-step-2").addEventListener("click", () => {
-        currentStep = 0;
-        showStep(currentStep);
-    });
+    if (prevStep2) {
+        prevStep2.addEventListener("click", () => {
+            currentStep = 0;
+            showStep(currentStep);
+        });
+    }
 
-    document.getElementById("next-step-2").addEventListener("click", () => {
-        currentStep = 2;
-        showStep(currentStep);
-    });
+    if (nextStep2) {
+        nextStep2.addEventListener("click", () => {
+            currentStep = 2;
+            showStep(currentStep);
+        });
+    }
 
-    document.getElementById("prev-step-3").addEventListener("click", () => {
-        currentStep = 1;
-        showStep(currentStep);
-    });
+    if (prevStep3) {
+        prevStep3.addEventListener("click", () => {
+            currentStep = 1;
+            showStep(currentStep);
+        });
+    }
 
     showStep(currentStep);
 });
