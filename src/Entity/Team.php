@@ -13,8 +13,8 @@ class Team
     #[ORM\Column(type: 'integer')]
     private int $id;
 
-    #[ORM\ManyToOne(targetEntity: Pool::class, inversedBy: 'teams')]
-    private Pool $pool;
+    #[ORM\ManyToOne(targetEntity: TeamMatchResult::class, inversedBy: 'teams')]
+    private TeamMatchResult $teamMatchResult;
 
 
     public function getId(): int
@@ -27,13 +27,13 @@ class Team
         $this->id = $id;
     }
 
-    public function getPool(): Pool
+    public function getTeamMatchResult(): TeamMatchResult
     {
-        return $this->pool;
+        return $this->teamMatchResult;
     }
 
-    public function setPool(Pool $pool): void
+    public function setTeamMatchResult(TeamMatchResult $teamMatchResult): void
     {
-        $this->pool = $pool;
+        $this->teamMatchResult = $teamMatchResult;
     }
 }
