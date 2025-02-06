@@ -44,11 +44,6 @@ RUN npm run build
 RUN chown -R www-data:www-data /var/www/html && \
     chmod -R 775 /var/www/html
 
-# Ensure the public directory exists and create the .htaccess file
-RUN mkdir -p /var/www/html/public && \
-    echo '<IfModule mod_rewrite.c>\nRewriteEngine On\nRewriteCond %{REQUEST_FILENAME} !-f\nRewriteRule ^(.*)$ index.php [QSA,L]\n</IfModule>' > /var/www/html/public/.htaccess
-
-
 COPY wait-for-it.sh /usr/local/bin/wait-for-it.sh
 COPY init.sh /usr/local/bin/init.sh
 
