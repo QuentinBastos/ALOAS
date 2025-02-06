@@ -21,9 +21,6 @@ RUN npm install -g npm
 
 RUN docker-php-ext-install pdo pdo_mysql zip gd
 
-# Enable Apache mod_rewrite
-RUN a2enmod rewrite
-
 WORKDIR /var/www/html
 
 COPY package.json package-lock.json ./
@@ -51,8 +48,9 @@ RUN chmod +x /usr/local/bin/wait-for-it.sh /usr/local/bin/init.sh && \
     dos2unix /usr/local/bin/wait-for-it.sh /usr/local/bin/init.sh
 
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY .htaccess /var/www/html/public/.htaccess
 
-RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
+RUN a2enmod rewrite
 
 EXPOSE 80
 
