@@ -52,3 +52,16 @@ The gitlab repository is available at the following address:
 ```bash
 https://iutbg-gitlab.iutbourg.univ-lyon1.fr/sae-but3/2024-25-web/gestiontournois-aloas
 ```
+
+## OVH + deployment 
+
+The project is also host on GitHub and deployed on OVH. The website is available at the following address:
+```bash
+https://aloas-tournois.fr/
+```
+
+To deploy it, Quentin need to do the following command for send the file in github :
+```bash
+git push github main
+```
+
