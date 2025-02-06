@@ -15,6 +15,6 @@ echo "Using database: $MYSQL_DATABASE"
 # Wait for a few seconds to ensure DB is ready
 sleep 5
 
-# Run migrations
+# Run migrations using the absolute path to the bin/console
 cd /var/www || exit
-php bin/console doctrine:migrations:migrate --no-interaction
+php /var/www/html/bin/console doctrine:migrations:migrate --no-interaction
