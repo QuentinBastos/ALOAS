@@ -65,3 +65,7 @@ To deploy it, Quentin need to do the following command for send the file in gith
 git push github main
 ```
 
+### PhpMyAdmin production : 
+
+https://phpmyadmin.cluster021.hosting.ovh.net/index.php?pma_username=aloastg519&pma_servername=aloastg519.mysql.db
+
