@@ -15,73 +15,33 @@ class Tournament
     #[ORM\Column(type: 'integer')]
     private int $id;
 
-    #[ORM\JoinColumn]
-    #[ORM\ManyToOne(targetEntity: Sport::class, inversedBy: 'tournaments')]
-    private Sport $sport;
-
-    #[ORM\OneToMany(targetEntity: TeamMatchResult::class, mappedBy: 'tournament')]
-    private Collection $teamMatchResult;
-
     #[ORM\Column(type: 'string', length: 255)]
     private string $name;
-
-    #[ORM\Column(type: 'string', length: 255)]
-    private string $location;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTime $date = null;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $location;
+
+    #[ORM\ManyToOne(targetEntity: Sport::class, inversedBy: 'tournaments')]
+    private Sport $sport;
+
+    #[ORM\OneToMany(targetEntity: Team::class, mappedBy: 'tournament')]
+    private Collection $teams;
+
+    #[ORM\OneToMany(targetEntity: TeamMatchResult::class, mappedBy: 'tournament')]
+    private Collection $teamMatchResults;
+
     public function __construct()
     {
-        $this->teamMatchResult = new ArrayCollection();
+        $this->teams = new ArrayCollection();
+        $this->teamMatchResults = new ArrayCollection();
     }
 
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
-
-    public function getSport(): Sport
-    {
-        return $this->sport;
-    }
-
-    public function setSport(Sport $sport): void
-    {
-        $this->sport = $sport;
-    }
-
-    public function setDate(\DateTime $date): void
-    {
-        $this->date = $date;
-    }
-
-    public function getDate(): \DateTime
-    {
-        return $this->date;
-    }
-
-    public function getTeamMatchResult(): Collection
-    {
-        return $this->teamMatchResult;
-    }
-
-    public function setTeamMatchResult(Collection $teamMatchResult): void
-    {
-        $this->teamMatchResult = $teamMatchResult;
-    }
-
-    public function addTeamMatchResult(TeamMatchResult $pool): void
-    {
-        if (!$this->teamMatchResult->contains($pool)) {
-            $this->teamMatchResult->add($pool);
-            $pool->setTournament($this);
-        }
     }
 
     public function getName(): string
@@ -94,6 +54,16 @@ class Tournament
         $this->name = $name;
     }
 
+    public function getDate(): ?\DateTime
+    {
+        return $this->date;
+    }
+
+    public function setDate(?\DateTime $date): void
+    {
+        $this->date = $date;
+    }
+
     public function getLocation(): string
     {
         return $this->location;
@@ -102,5 +72,41 @@ class Tournament
     public function setLocation(string $location): void
     {
         $this->location = $location;
+    }
+
+    public function getSport(): Sport
+    {
+        return $this->sport;
+    }
+
+    public function setSport(Sport $sport): void
+    {
+        $this->sport = $sport;
+    }
+
+    public function getTeams(): Collection
+    {
+        return $this->teams;
+    }
+
+    public function addTeam(Team $team): void
+    {
+        if (!$this->teams->contains($team)) {
+            $this->teams->add($team);
+            $team->setTournament($this);
+        }
+    }
+
+    public function getTeamMatchResults(): Collection
+    {
+        return $this->teamMatchResults;
+    }
+
+    public function addTeamMatchResult(TeamMatchResult $teamMatchResult): void
+    {
+        if (!$this->teamMatchResults->contains($teamMatchResult)) {
+            $this->teamMatchResults->add($teamMatchResult);
+            $teamMatchResult->setTournament($this);
+        }
     }
 }

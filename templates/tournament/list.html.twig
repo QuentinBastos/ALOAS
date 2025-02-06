@@ -26,11 +26,13 @@
             <ul class=" gap-8 w-full items-center content-center grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 justify-center gap-8 px-12 pb-6">
                 {% for tournament in tournaments %}
                     <li>
-                        {% include 'components/cardTournament.html.twig' with {
-                            'name': tournament.name,
-                            'location': tournament.location,
-                            'sportName': tournament.sport.name
-                        } %}
+                        <a href="{{ path('app_tournament_show', { 'id': tournament.id }) }}" class="block">
+                            {% include 'components/cardTournament.html.twig' with {
+                                'name': tournament.name,
+                                'location': tournament.location,
+                                'sportName': tournament.sport.name
+                            } %}
+                        </a>
                     </li>
                 {% else %}
                     <li class="grid-cols-subgrid col-span-5 h-full items-center">

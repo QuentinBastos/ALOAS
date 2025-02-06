@@ -8,10 +8,6 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 
 const path = require('path');
 Encore
-
-    .addAliases({
-        '@img': path.resolve(__dirname, 'assets/img'),
-    })
     // directory where compiled assets will be stored
     .setOutputPath('public/build/')
     // public path used by the web server to access the output path
@@ -63,7 +59,7 @@ Encore
 
     .copyFiles({
         from: './assets/images',
-        to: 'images/[path][name].[hash:8].[ext]',
+        to: 'images/[path][name].[ext]',
         pattern: /\.(png|jpg|jpeg|svg|ico|webp)$/
     })
 

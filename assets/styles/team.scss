@@ -1,0 +1,21 @@
+.image-selection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.team-logo {
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.2s, border 0.2s;
+}
+
+.team-logo:hover {
+  transform: scale(1.1);
+}
+
+.selected {
+  border: 2px solid blue;
+}

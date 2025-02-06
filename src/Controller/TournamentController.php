@@ -70,4 +70,14 @@ class TournamentController extends AbstractController
             'filterForm' => $form->createView(),
         ]);
     }
+
+    #[Route('/{id}', name: 'app_tournament_show')]
+    public function show(Tournament $tournament): Response
+    {
+        return $this->render('tournament/show.html.twig', [
+            'tournament' => $tournament,
+            'teams' => $tournament->getTeams(),
+        ]);
+    }
+
 }

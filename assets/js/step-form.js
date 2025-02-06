@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     const steps = document.querySelectorAll(".form-step");
     const stepIcons = document.querySelectorAll(".step-icon");
-    const stepTexts = document.querySelectorAll(".step-text"); // Sélection des textes liés aux étapes
+    const stepTexts = document.querySelectorAll(".step-text");
     let currentStep = 0;
 
     const showStep = (stepIndex) => {

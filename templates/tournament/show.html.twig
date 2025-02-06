@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tournoi - {{ tournament.name }}{% endblock %}
+
+{% block body %}
+    {% include 'partial/header.html.twig' %}
+    {% include 'partial/rightAside.html.twig' %}
+    <div class="flex w-screen h-[91vh] ">
+        <aside id="sidebar" class="flex w-1/6 min-w-24">
+            {% include 'partial/aside.html.twig' %}
+        </aside>
+        <div class=" w-5/6 container mx-auto flex flex-col items-center pt-6 text-xl font-medium overflow-y-scroll main-content">
+            <h1 class="text-2xl font-bold text-[--bg-green-light]">{{ tournament.name }}</h1>
+            <p class="text-gray-700 mt-2">📍 Lieu : {{ tournament.location }}</p>
+            <p class="text-gray-700">🏅 Sport : {{ tournament.sport.name }}</p>
+            <p class="text-gray-700">📅 Date : {{ tournament.date|date('d/m/Y') }}</p>
+
+            <a href="{{ path('app_tournament_list') }}" class="mt-4 inline-block text-[--bg-green-light]">⬅ Retour à la liste</a>
+        </div>
+        <h2 class="text-xl font-bold mt-6">🏆 Équipes participantes</h2>
+        <ul class="mt-2 list-disc list-inside">
+            {% for team in teams %}
+                <li class="text-gray-800">{{ team.name }}</li>
+            {% else %}
+                <li class="text-gray-500">Aucune équipe inscrite.</li>
+            {% endfor %}
+        </ul>
+
+        <a href="{{ path('app_team_add', {'tournamentId': tournament.id}) }}" class="mt-4 inline-block text-blue-600">➕ Ajouter une équipe</a>
+
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
