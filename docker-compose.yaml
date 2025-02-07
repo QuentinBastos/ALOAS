@@ -9,20 +9,16 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    environment:
-      DATABASE_URL: ${DATABASE_URL}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_ALLOW_EMPTY_PASSWORD: ${MYSQL_ALLOW_EMPTY_PASSWORD}
-      APP_ENV: ${APP_ENV}
+    env_file:
+      - .env.local
     command: [ "sh", "-c", "/usr/local/bin/wait-for-it.sh db -- /usr/local/bin/init.sh && apache2-foreground" ]
 
   db:
-    image: mysql:8.0
+    image: mysql:8.0.31
     ports:
       - "3306:3306"
-    environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_ALLOW_EMPTY_PASSWORD: ${MYSQL_ALLOW_EMPTY_PASSWORD}
+    env_file:
+      - .env.local
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       interval: 10s
