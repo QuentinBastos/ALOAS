@@ -26,14 +26,12 @@ RUN apt-get update && apt-get install -y \
   libpng-dev \
   libzip-dev \
   default-mysql-client \
-  libpq-dev \
-  postgresql-client \
   dos2unix \
   curl \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
-RUN docker-php-ext-install pdo pdo_pgsql zip gd
+RUN docker-php-ext-install pdo pdo_mysql zip gd
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -57,8 +55,11 @@ RUN chown -R www-data:www-data /var/www/html && \
     chmod -R 775 /var/www/html
 
 # Copy Apache & initialization files
+COPY wait-for-it.sh /usr/local/bin/wait-for-it.sh
 COPY init.sh /usr/local/bin/init.sh
-RUN chmod +x /usr/local/bin/init.sh && dos2unix /usr/local/bin/init.sh
+
+RUN chmod +x /usr/local/bin/wait-for-it.sh /usr/local/bin/init.sh && \
+    dos2unix /usr/local/bin/wait-for-it.sh /usr/local/bin/init.sh
 
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 COPY .htaccess /var/www/html/public/.htaccess
@@ -68,4 +69,5 @@ RUN a2enmod rewrite
 
 EXPOSE 80
 
-CMD ["/bin/bash", "-c", "/usr/local/bin/init.sh && apache2-foreground"]
+CMD ["apache2-foreground"]
+
