@@ -12,6 +12,10 @@ DB_USER=$(echo "$DATABASE_URL" | sed -E 's/mysql:\/\/([^:]+):[^@]+@.*/\1/')
 DB_PASS=$(echo "$DATABASE_URL" | sed -E 's/mysql:\/\/[^:]+:([^@]+)@.*/\1/')
 DB_NAME=$(echo "$DATABASE_URL" | sed -E 's/.*\/([^?]+).*/\1/')
 
+echo "🔹 Database Host: $DB_HOST"
+echo "🔹 Database User: $DB_USER"
+echo "🔹 Database Name: $DB_NAME"
+
 # Wait for MySQL to be available
 echo "⏳ Waiting for MySQL to be available at $DB_HOST..."
 until mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" -e "SELECT 1" &>/dev/null; do
