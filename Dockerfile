@@ -45,7 +45,7 @@ COPY . /var/www/html
 RUN rm -rf vendor
 
 # Install PHP dependencies (without dev dependencies for production)
-RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --optimize-autoloader
+RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --optimize-autoloader
 
 # Copy built assets from Node.js stage
 COPY --from=node-builder /app/public/build public/build
