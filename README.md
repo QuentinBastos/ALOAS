@@ -55,6 +55,11 @@ https://iutbg-gitlab.iutbourg.univ-lyon1.fr/sae-but3/2024-25-web/gestiontournois
 
 ## OVH + deployment 
 
+This command is used to take the files that we wnat in the prod and the file of main for like docker, and script: 
+```bash
+git config --global merge.ours.driver true
+```
+
 The project is also host on GitHub and deployed on OVH. The website is available at the following address:
 ```bash
 https://aloas-tournois.fr/
