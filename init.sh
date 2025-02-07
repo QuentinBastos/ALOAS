@@ -17,7 +17,7 @@ TIMEOUT=300  # 5 minutes timeout
 ELAPSED=0
 SLEEP_TIME=5
 
-until test_mysql_connection; do
+until mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" -e "SELECT 1" &>/dev/null; do
     if [ $ELAPSED -ge $TIMEOUT ]; then
         echo "❌ Timeout waiting for MySQL connection"
         exit 1
