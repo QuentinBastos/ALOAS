@@ -6,4 +6,12 @@ services:
     environment:
       DATABASE_URL: ${DATABASE_URL}
       APP_ENV: "prod"
+    volumes:
+      - vendor:/var/www/html/vendor  # Persist PHP dependencies
+      - public_build:/var/www/html/public/build  # Persist Webpack assets
+      - ./public/uploads:/var/www/html/public/uploads  # Keep only user-uploaded files
     command: ["/bin/bash", "-c", "/usr/local/bin/init.sh && apache2-foreground"]
+
+volumes:
+  vendor:
+  public_build:
