@@ -3,3 +3,4 @@ Dockerfile merge=ours
 init.sh merge=ours
 wait-for-it.sh merge=ours
 package.json merge=ours
+bundles.php merge=ours
