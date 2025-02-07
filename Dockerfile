@@ -26,6 +26,7 @@ RUN apt-get update && apt-get install -y \
   libpng-dev \
   libzip-dev \
   default-mysql-client \
+  libpq-dev \
   postgresql-client \
   dos2unix \
   curl \
