@@ -1,5 +1,17 @@
+# ------------------  BUILD STAGE  ------------------
+FROM node:20 as node-builder
+WORKDIR /app
+
+# Copy package files
+COPY package.json package-lock.json ./
+
+# Install dependencies and build assets
+RUN npm ci && npm run build
+
+# ------------------  PHP STAGE  ------------------
 FROM php:8.3-apache
 
+# Install required system dependencies
 RUN apt-get update && apt-get install -y \
   git \
   zip \
@@ -7,50 +19,44 @@ RUN apt-get update && apt-get install -y \
   libpng-dev \
   libzip-dev \
   default-mysql-client \
-  nano \
   dos2unix \
-  curl && \
-  apt-get clean && rm -rf /var/lib/apt/lists/*
+  curl \
+  && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get upgrade -y && \
-    apt-get install -y curl && \
-    curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
-    apt-get install -y nodejs
-
-RUN npm install -g npm
-
+# Install PHP extensions
 RUN docker-php-ext-install pdo pdo_mysql zip gd
+
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
-COPY package.json package-lock.json ./
-
-RUN npm install
-
+# Copy PHP project files
 COPY . /var/www/html
 
-RUN rm -rf /var/www/html/vendor
+# Remove existing vendor directory before installing dependencies
+RUN rm -rf vendor
 
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Install PHP dependencies (without dev dependencies for production)
+RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --optimize-autoloader
 
-RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --optimize-autoloader
+# Copy built assets from Node.js stage
+COPY --from=node-builder /app/public/build public/build
 
-RUN npm run build
-
-# Set correct permissions for /var/www/html
+# Set correct permissions
 RUN chown -R www-data:www-data /var/www/html && \
     chmod -R 775 /var/www/html
 
+# Copy Apache & initialization files
 COPY init.sh /usr/local/bin/init.sh
-
-RUN chmod +x /usr/local/bin/init.sh && \
-    dos2unix /usr/local/bin/init.sh
+RUN chmod +x /usr/local/bin/init.sh && dos2unix /usr/local/bin/init.sh
 
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 COPY .htaccess /var/www/html/public/.htaccess
 
+# Enable Apache rewrite module
 RUN a2enmod rewrite
 
 EXPOSE 80
 
-CMD ["apache2-foreground"]
+CMD ["/bin/bash", "-c", "/usr/local/bin/init.sh && apache2-foreground"]
