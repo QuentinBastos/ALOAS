@@ -7,11 +7,6 @@ set -e
 echo "🔄 Initializing Environment..."
 
 # Extract MySQL credentials from DATABASE_URL
-DB_HOST=$(echo "$DATABASE_URL" | sed -E 's/mysql:\/\/[^:]+:[^@]+@([^:]+):.*/\1/')
-DB_USER=$(echo "$DATABASE_URL" | sed -E 's/mysql:\/\/([^:]+):[^@]+@.*/\1/')
-DB_PASS=$(echo "$DATABASE_URL" | sed -E 's/mysql:\/\/[^:]+:([^@]+)@.*/\1/')
-DB_NAME=$(echo "$DATABASE_URL" | sed -E 's/.*\/([^?]+).*/\1/')
-
 echo "🔹 Database Host: $DB_HOST"
 echo "🔹 Database User: $DB_USER"
 echo "🔹 Database Name: $DB_NAME"
