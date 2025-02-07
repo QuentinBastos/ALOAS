@@ -13,7 +13,7 @@ echo "🔹 Database Name: $DB_NAME"
 
 # Wait for MySQL to be available
 echo "⏳ Waiting for MySQL to be available at $DB_HOST..."
-until mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" -e "SELECT 1" &>/dev/null; do
+until mysql -h "$DB_HOST" -u "$DB_USER" -p "$DB_PASS" -e "SELECT 1" &>/dev/null; do
   echo "🚫 MySQL is unavailable - retrying..."
   sleep 3
 done
