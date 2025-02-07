@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Team;
 use App\Entity\Tournament;
 use App\Form\TeamCollectionType;
+use App\Manager\GenerateMatch;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,7 @@ class TeamController extends AbstractController
 {
     public function __construct(
         private readonly EntityManagerInterface $em,
+        private readonly GenerateMatch $generateMatch,
     ) {
     }
 
@@ -39,6 +41,8 @@ class TeamController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
+
+
             foreach ($data['teams'] as $team) {
                 $team->setTournament($tournament);
                 $this->em->persist($team);
@@ -52,6 +56,8 @@ class TeamController extends AbstractController
         $svgDir = $this->getParameter('kernel.project_dir') . '/assets/images/team/';
         $svgFiles = array_diff(scandir($svgDir), ['.', '..']);
 
+        $this->generateMatch->deleteOldMatches($tournament);
+        $this->generateMatch->generateTournament($tournament);
         return $this->render('team/add.html.twig', [
             'form' => $form->createView(),
             'tournament' => $tournament,

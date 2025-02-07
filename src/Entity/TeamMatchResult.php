@@ -22,11 +22,11 @@ class TeamMatchResult
     #[ORM\ManyToOne(targetEntity: Team::class)]
     private Team $home;
 
-    #[ORM\Column(type: 'integer')]
-    private int $visitorScore;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private ?int $visitorScore;
 
-    #[ORM\Column(type: 'integer')]
-    private int $homeScore;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private ?int $homeScore;
 
     #[ORM\Column(type: 'string', length: 255)]
     private string $phase;
