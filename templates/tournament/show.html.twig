@@ -28,6 +28,59 @@
 
         <a href="{{ path('app_team_add', {'tournamentId': tournament.id}) }}" class="mt-4 inline-block text-blue-600">➕ Ajouter une équipe</a>
 
+        <h2 class="text-xl font-bold mt-6">⚽ Matchs</h2>
+
+        {% if matches is empty %}
+            <p class="text-gray-500">Aucun match généré pour l'instant.</p>
+        {% else %}
+            <table class="mt-2 border-collapse w-full">
+                <thead>
+                <tr class="bg-gray-200">
+                    <th class="border px-4 py-2">Phase</th>
+                    <th class="border px-4 py-2">Équipe à domicile</th>
+                    <th class="border px-4 py-2">Équipe visiteuse</th>
+                    <th class="border px-4 py-2">Score</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for match in matches %}
+                    <tr class="border">
+                        <td class="border px-4 py-2">Phase {{ match.phase }}</td>
+                        <td class="border px-4 py-2">{{ match.home.name }}</td>
+                        <td class="border px-4 py-2">{{ match.visitor.name }}</td>
+                        <td class="border px-4 py-2">
+                            {% if match.homeScore is not null and match.visitorScore is not null %}
+                                {{ match.homeScore }} - {{ match.visitorScore }}
+                            {% else %}
+                                En attente
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+
+        <h2 class="text-xl font-bold mt-6">🏆 Matchs en cours</h2>
+
+        <form action="{{ path('app_tournament_update_scores', {'id': tournament.id}) }}" method="POST">
+            <ul class="mt-2 list-disc list-inside">
+                {% for match in tournament.teamMatchResults %}
+                    <li class="text-gray-800">
+                        {{ match.home.name }}
+                        <input type="number" name="home_score_{{ match.id }}" value="{{ match.homeScore ?? '' }}" class="w-12 text-center border border-gray-300 rounded">
+                        -
+                        <input type="number" name="visitor_score_{{ match.id }}" value="{{ match.visitorScore ?? '' }}" class="w-12 text-center border border-gray-300 rounded">
+                        {{ match.visitor.name }}
+                    </li>
+                {% else %}
+                    <li class="text-gray-500">Aucun match en cours.</li>
+                {% endfor %}
+            </ul>
+
+            <button type="submit" class="mt-4 px-4 py-2 bg-green-500 text-white rounded">Valider les scores</button>
+        </form>
     </div>
 {% endblock %}
 

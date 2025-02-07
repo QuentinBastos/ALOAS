@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Team;
+use App\Entity\TeamMatchResult;
 use App\Entity\Tournament;
 use App\Form\TournamentFilterType;
 use App\Form\TournamentType;
+use App\Manager\GenerateMatch;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +20,7 @@ class TournamentController extends AbstractController
 
     public function __construct(
         private readonly EntityManagerInterface $em,
+        private readonly GenerateMatch $generateMatch,
     )
     {
     }
@@ -72,12 +76,68 @@ class TournamentController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_tournament_show')]
-    public function show(Tournament $tournament): Response
+    public function show(int $id): Response
     {
+        $tournament = $this->em->getRepository(Tournament::class)->find($id);
+
+        if (!$tournament) {
+            throw $this->createNotFoundException('Tournoi non trouvé.');
+        }
+
+        $teams = $this->em->getRepository(Team::class)->findBy(['tournament' => $tournament]);
+        $matches = $this->em->getRepository(TeamMatchResult::class)->findBy(
+            ['tournament' => $tournament],
+            ['phase' => 'ASC']
+        );
+
         return $this->render('tournament/show.html.twig', [
             'tournament' => $tournament,
-            'teams' => $tournament->getTeams(),
+            'teams' => $teams,
+            'matches' => $matches,
         ]);
     }
+
+
+    #[Route('/{id}/update-scores', name: 'app_tournament_update_scores', methods: ['POST'])]
+    public function updateScores(Request $request, Tournament $tournament): Response
+    {
+        $matches = $this->em->getRepository(TeamMatchResult::class)->findBy([
+            'tournament' => $tournament,
+            'phase' => '1', // Phase actuelle (modifier selon la gestion des phases)
+        ]);
+
+        $allScoresFilled = true;
+
+        foreach ($matches as $match) {
+            $homeScore = $request->request->get("home_score_{$match->getId()}");
+            $visitorScore = $request->request->get("visitor_score_{$match->getId()}");
+
+            if ($homeScore !== null && $visitorScore !== null) {
+                $match->setHomeScore((int) $homeScore);
+                $match->setVisitorScore((int) $visitorScore);
+
+                // Définir le gagnant
+                if ($homeScore > $visitorScore) {
+                    $match->setWinner($match->getHome());
+                } elseif ($visitorScore > $homeScore) {
+                    $match->setWinner($match->getVisitor());
+                }
+
+                $this->em->persist($match);
+            } else {
+                $allScoresFilled = false;
+            }
+        }
+
+        $this->em->flush();
+
+        // Si tous les scores sont remplis, on génère la phase suivante
+        if ($allScoresFilled) {
+            $this->generateMatch->generateNextPhase($tournament);
+        }
+
+        return $this->redirectToRoute('app_tournament_show', ['id' => $tournament->getId()]);
+    }
+
 
 }

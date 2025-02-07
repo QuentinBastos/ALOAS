@@ -69,7 +69,7 @@ class TeamMatchResult
         $this->home = $home;
     }
 
-    public function getVisitorScore(): int
+    public function getVisitorScore(): ?int
     {
         return $this->visitorScore;
     }
@@ -79,7 +79,7 @@ class TeamMatchResult
         $this->visitorScore = $visitorScore;
     }
 
-    public function getHomeScore(): int
+    public function getHomeScore(): ?int
     {
         return $this->homeScore;
     }

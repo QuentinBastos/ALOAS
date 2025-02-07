@@ -60,4 +60,42 @@ class GenerateMatch
         $this->em->flush();
     }
 
+    public function generateNextPhase(Tournament $tournament): void
+    {
+        $currentPhase = (int) $tournament->getTeamMatchResults()->last()?->getPhase() ?? 1;
+        $matches = $this->em->getRepository(TeamMatchResult::class)->findBy([
+            'tournament' => $tournament,
+            'phase' => (string) $currentPhase,
+        ]);
+
+        $winningTeams = [];
+        foreach ($matches as $match) {
+            if ($match->getWinner() !== null) {
+                $winningTeams[] = $match->getWinner();
+            }
+        }
+
+        if (count($winningTeams) > 1) {
+            $nextPhase = $currentPhase + 1;
+            shuffle($winningTeams);
+
+            for ($i = 0; $i < count($winningTeams); $i += 2) {
+                if (isset($winningTeams[$i + 1])) {
+                    $match = new TeamMatchResult();
+                    $match->setTournament($tournament);
+                    $match->setHome($winningTeams[$i]);
+                    $match->setVisitor($winningTeams[$i + 1]);
+                    $match->setPhase((string) $nextPhase);
+
+                    $this->em->persist($match);
+                } else {
+                    $winningTeams[] = $winningTeams[$i];
+                }
+            }
+
+            $this->em->flush();
+        }
+    }
+
+
 }
