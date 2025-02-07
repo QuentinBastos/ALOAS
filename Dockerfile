@@ -26,12 +26,13 @@ RUN apt-get update && apt-get install -y \
   libpng-dev \
   libzip-dev \
   default-mysql-client \
+  postgresql-client \
   dos2unix \
   curl \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
-RUN docker-php-ext-install pdo pdo_mysql zip gd
+RUN docker-php-ext-install pdo pdo_pgsql zip gd
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
