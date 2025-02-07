@@ -30,6 +30,6 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress",
-        "build-prod": "webpack --mode=production"
+        "build-prod": "encore production --mode=production"
     }
 }
