@@ -1,12 +1,19 @@
-# ------------------  BUILD STAGE  ------------------
-FROM node:20 as node-builder
+# ------------------  NODE STAGE  ------------------
+FROM node:20 AS node-builder
+
 WORKDIR /app
 
-# Copy package files
+# Copy package.json & lock file first to cache dependencies
 COPY package.json package-lock.json ./
 
-# Install dependencies and build assets
-RUN npm ci && npm run build
+# Install dependencies
+RUN npm ci
+
+# Copy assets and build them
+COPY assets/ ./assets/
+COPY webpack.config.js ./
+
+RUN npm run build
 
 # ------------------  PHP STAGE  ------------------
 FROM php:8.3-apache
