@@ -13,7 +13,7 @@ RUN npm ci
 COPY assets/ ./assets/
 COPY webpack.config.js ./
 
-RUN npm run build-prod
+RUN npm run build
 
 # ------------------  PHP STAGE  ------------------
 FROM php:8.3-apache
