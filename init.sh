@@ -1,18 +1,20 @@
 #!/bin/bash
 
-echo "$DB_HOST"
-echo "$DB_USER"
-echo "$DB_PASS"
-echo "$MYSQL_DATABASE"
+set -e
 
-# Wait for MySQL to be available
+echo "Waiting for database connection..."
 until mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" -e "SELECT 1"; do
   >&2 echo "MySQL is unavailable - sleeping"
-  sleep 1
+  sleep 2
 done
 
-# Create the database if it doesn't exist
+echo "Creating database if it doesn't exist..."
 mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;"
 
-cd /var/www || exit
-php /var/www/html/bin/console doctrine:migrations:migrate --no-interaction
+echo "Running migrations..."
+cd /var/www/html
+php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
+
+echo "Clearing cache..."
+php bin/console cache:clear --env=prod
+php bin/console cache:warmup --env=prod

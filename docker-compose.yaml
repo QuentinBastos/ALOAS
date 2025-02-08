@@ -4,26 +4,37 @@ services:
     ports:
       - "80:80"
     volumes:
-      - .:/var/www/html
+      - ./public:/var/www/html/public
       - vendor:/var/www/html/vendor
     depends_on:
       db:
         condition: service_healthy
-    env_file:
-      - .env.local
+    environment:
+      - APP_ENV=prod
+      - DATABASE_URL=mysql://${DB_USER}:${DB_PASS}@db:3306/${MYSQL_DATABASE}
+      - DB_HOST=db
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
     command: [ "sh", "-c", "/usr/local/bin/wait-for-it.sh db -- /usr/local/bin/init.sh && apache2-foreground" ]
 
   db:
-    image: mysql:5.7
+    image: mysql:8.0
     ports:
       - "3306:3306"
-    env_file:
-      - .env.local
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASS}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASS}
+    volumes:
+      - mysql_data:/var/lib/mysql
     healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_PASS}"]
       interval: 10s
       timeout: 5s
       retries: 5
 
 volumes:
   vendor:
+  mysql_data:

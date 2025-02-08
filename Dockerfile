@@ -62,7 +62,6 @@ RUN chmod +x /usr/local/bin/wait-for-it.sh /usr/local/bin/init.sh && \
     dos2unix /usr/local/bin/wait-for-it.sh /usr/local/bin/init.sh
 
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
-COPY .htaccess /var/www/html/public/.htaccess
 
 # Enable Apache rewrite module
 RUN a2enmod rewrite
