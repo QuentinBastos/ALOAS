@@ -4,7 +4,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./public:/var/www/html/public
+      - .:/var/www/html/public
       - vendor:/var/www/html/vendor
     depends_on:
       db:
@@ -27,8 +27,6 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${DB_USER}
       - MYSQL_PASSWORD=${DB_PASS}
-    volumes:
-      - mysql_data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_PASS}"]
       interval: 10s
@@ -37,4 +35,3 @@ services:
 
 volumes:
   vendor:
-  mysql_data:
