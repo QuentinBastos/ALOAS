@@ -1,18 +1,21 @@
 #!/bin/bash
 
-echo "$DB_HOST"
-echo "$DB_USER"
-echo "$DB_PASS"
-echo "$MYSQL_DATABASE"
+set -e
 
-# Wait for MySQL to be available
-until mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" -e "SELECT 1"; do
-  >&2 echo "MySQL is unavailable - sleeping"
-  sleep 1
+echo "🔄 Starting initialization..."
+
+# Wait for PostgreSQL to be available
+echo "⏳ Checking PostgreSQL connection..."
+until PGPASSWORD="$DB_PASS" psql -h "$DB_HOST" -U "$DB_USER" -d "$DB_NAME" -c "SELECT 1" &>/dev/null; do
+    >&2 echo "🔄 PostgreSQL is unavailable - sleeping"
+    sleep 3
 done
 
-# Create the database if it doesn't exist
-mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;"
+echo "✅ PostgreSQL is available!"
 
-cd /var/www || exit
-php /var/www/html/bin/console doctrine:migrations:migrate --no-interaction
+# Run migrations
+echo "⚡ Running database migrations..."
+php bin/console doctrine:migrations:migrate --no-interaction
+
+echo "✅ Migrations complete!"
+echo "🎉 Initialization complete!"

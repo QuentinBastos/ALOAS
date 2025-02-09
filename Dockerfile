@@ -6,10 +6,11 @@ RUN apt-get update && apt-get install -y \
   unzip \
   libpng-dev \
   libzip-dev \
-  default-mysql-client \
   nano \
   dos2unix \
-  curl && \
+  curl \
+  postgresql-client \
+  libpq-dev && \
   apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update && apt-get upgrade -y && \
@@ -19,7 +20,7 @@ RUN apt-get update && apt-get upgrade -y && \
 
 RUN npm install -g npm
 
-RUN docker-php-ext-install pdo pdo_mysql zip gd
+RUN docker-php-ext-install pdo pdo_pgsql zip gd
 
 WORKDIR /var/www/html
 
@@ -37,9 +38,8 @@ RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --optimize-autoloader
 
 RUN npm run build
 
-# Set correct permissions for /var/www/html
-RUN chown -R www-data:www-data /var/www/html && \
-    chmod -R 775 /var/www/html
+RUN chown -R www-data:www-data /var/www/html/var /var/www/html/public && \
+    chmod -R 775 /var/www/html/var /var/www/html/public
 
 COPY wait-for-it.sh /usr/local/bin/wait-for-it.sh
 COPY init.sh /usr/local/bin/init.sh
