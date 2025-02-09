@@ -18,6 +18,7 @@ echo "Using database: $DB_NAME"
 # Wait to ensure DB is fully ready
 sleep 5
 
+php /var/www/html/bin/console doctrine:schema:drop --force
 # Run migrations
 echo "⚙️ Running database migrations..."
 php /var/www/html/bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration || {
