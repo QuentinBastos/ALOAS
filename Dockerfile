@@ -50,20 +50,18 @@ COPY init.sh /usr/local/bin/init.sh
 RUN chmod +x /usr/local/bin/init.sh && \
     dos2unix /usr/local/bin/init.sh
 
-ARG DB_HOST
-ARG DB_USER
-ARG DB_PASS
-ARG DB_NAME
+COPY run_migrations.sh /usr/local/bin/run_migrations.sh
 
-ENV DB_HOST=${DB_HOST}
-ENV DB_USER=${DB_USER}
-ENV DB_PASS=${DB_PASS}
-ENV DB_NAME=${DB_NAME}
-
-RUN /usr/local/bin/init.sh
+RUN chmod +x /usr/local/bin/run_migrations.sh && \
+    dos2unix /usr/local/bin/run_migrations.sh
 
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 
 EXPOSE 80
 
-CMD ["apache2-foreground"]
+
+COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
+
+EXPOSE 80
+
+CMD ["/usr/local/bin/run_migrations.sh", "apache2-foreground"]
