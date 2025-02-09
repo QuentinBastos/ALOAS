@@ -45,11 +45,10 @@ RUN npm run build
 RUN chown -R www-data:www-data /var/www/html/var /var/www/html/public && \
     chmod -R 775 /var/www/html/var /var/www/html/public
 
-COPY wait-for-it.sh /usr/local/bin/wait-for-it.sh
 COPY init.sh /usr/local/bin/init.sh
 
-RUN chmod +x /usr/local/bin/wait-for-it.sh /usr/local/bin/init.sh && \
-    dos2unix /usr/local/bin/wait-for-it.sh /usr/local/bin/init.sh
+RUN chmod +x /usr/local/bin/init.sh && \
+    dos2unix /usr/local/bin/init.sh
 
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 

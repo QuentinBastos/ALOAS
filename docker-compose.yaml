@@ -16,7 +16,7 @@ services:
       - DB_USER=${DB_USER}
       - DB_PASS=${DB_PASS}
       - DB_NAME=${DB_NAME}
-    command: [ "sh", "-c", "/usr/local/bin/wait-for-it.sh db -- /usr/local/bin/init.sh && apache2-foreground" ]
+    command: [ "sh", "-c", "/usr/local/bin/init.sh && apache2-foreground" ]
 
 volumes:
   vendor:
