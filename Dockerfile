@@ -7,6 +7,8 @@ RUN apt-get update && apt-get install -y \
   libpng-dev \
   libzip-dev \
   default-mysql-client \
+  postgresql-client \
+  libpq-dev \
   nano \
   dos2unix \
   curl && \
@@ -19,7 +21,7 @@ RUN apt-get update && apt-get upgrade -y && \
 
 RUN npm install -g npm
 
-RUN docker-php-ext-install pdo pdo_mysql zip gd
+RUN docker-php-ext-install pdo pdo_mysql pdo_pgsql zip gd
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite

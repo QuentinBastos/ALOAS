@@ -5,18 +5,19 @@ set -e
 
 echo "🔄 Starting initialization..."
 
-# Wait for MySQL to be available
-echo "⏳ Checking MySQL connection..."
-until mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" -e "SELECT 1" &>/dev/null; do
-    >&2 echo "🔄 MySQL is unavailable - sleeping"
+# Wait for PostgreSQL to be available
+echo "⏳ Checking PostgreSQL connection..."
+until PGPASSWORD="$DB_PASS" psql -h "$DB_HOST" -U "$DB_USER" -c "SELECT 1" &>/dev/null; do
+    >&2 echo "🔄 PostgreSQL is unavailable - sleeping"
     sleep 3
 done
 
-echo "✅ MySQL is available!"
+echo "✅ PostgreSQL is available!"
 
 # Create the database if it doesn't exist
 echo "🔧 Setting up database..."
-mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;"
+PGPASSWORD="$DB_PASS" psql -h "$DB_HOST" -U "$DB_USER" -tc "SELECT 1 FROM pg_database WHERE datname = '$POSTGRES_DB'" | grep -q 1 || \
+PGPASSWORD="$DB_PASS" psql -h "$DB_HOST" -U "$DB_USER" -c "CREATE DATABASE \"$POSTGRES_DB\""
 echo "✅ Database setup complete!"
 
 # Run migrations
