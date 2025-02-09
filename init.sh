@@ -13,13 +13,13 @@ done
 
 echo "✅ PostgreSQL is available!"
 
-# Generate migrations if needed
-echo "⚡ Generating PostgreSQL migrations..."
-php bin/console doctrine:migrations:diff || echo "No new migrations needed."
+# Log the DB name to ensure it's correct
+echo "Using database: $DB_NAME"
+
+# Wait to ensure DB is fully ready
+sleep 5
 
 # Run migrations
-echo "⚡ Running database migrations..."
-php bin/console doctrine:migrations:migrate --no-interaction
+echo "⚙️ Running database migrations..."
+php /var/www/html/bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
 
-echo "✅ Migrations complete!"
-echo "🎉 Initialization complete!"
