@@ -14,8 +14,8 @@ class TeamType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Nom de l\'équipe',
-                'attr' => ['class' => 'form-control selected-team-name'],
+                'label_attr' => ['class' => 'hidden'],
+                'attr' => ['class' => 'form-control selected-team-name hidden'],
             ]);
     }
 

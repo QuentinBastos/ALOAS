@@ -3,100 +3,69 @@
 {% block title %}Ajouter des équipes{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1>Ajouter des équipes pour {{ tournament.name }}</h1>
+    {% include 'partial/header.html.twig' %}
+    {% include 'partial/rightAside.html.twig' %}
 
-        {{ form_start(form) }}
+    <div class="w-screen h-[91vh] flex items-center justify-center ">
+        <section class="container mx-auto max-w-[340px] max-h-[380px] h-3/4 rounded-lg flex flex-col rounded border-t-4
+        border-[--bg-green-light] px-4 pt-2">
+            <div class="h-1/4">
+                <h1>Ajouter des équipes</h1>
+                <p class="step-text">Ajouter une ou plusieurs équipes. Vous pouvez ajouter plusieurs équipes à la fois.</p>
+            </div>
 
-        <div class="image-selection">
-            {% for file in svgFiles %}
-                {% set teamName = file|replace({'.svg': ''}) %}
-                <div class="team-item">
-                    <img src="{{ asset('build/images/team/' ~ file) }}"
-                         class="team-logo"
-                         data-name="{{ teamName }}"
-                         data-team-id="{{ loop.index }}"
-                        alt="{{ teamName }}" />
-                </div>
-            {% endfor %}
-        </div>
+            {{ form_start(form, {'attr': {'class': 'flex flex-col h-3/4 justify-between py-2'}}) }}
 
-        <div id="team-list" data-prototype="{{ form_widget(form.teams.vars.prototype)|e('html_attr') }}">
-            {% for teamForm in form.teams %}
-                <div class="team-item">
-                    {{ form_row(teamForm.name, {'attr': {'class': 'selected-team-name team-input-' ~ loop.index}}) }}
-                </div>
-            {% endfor %}
-        </div>
+            <div id="team-list" class="team-list" data-prototype="{{ form_widget(form.teams.vars.prototype)|e('html_attr') }}">
+                {% for teamForm in form.teams %}
+                    <div class="team-item" data-team-index="{{ loop.index0 }}">
+                        <p>{{ loop.index0 }}. Equipe</p>
+                        <div class="image-placeholder" data-team-index="{{ loop.index0 }}">
+                            <img src="" alt="" class="team-preview">
+                            {% if loop.index0 != 0 %}
+                                <button type="button" class="remove-team btn">
+                                    &times;
+                                </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {{ form_row(teamForm.name, {'attr': {'class': 'selected-team-name hidden', 'data-team-index': loop.index0}}) }}
+                {% endfor %}
+            </div>
 
-        <button type="button" id="add-team" class="btn btn-secondary">Ajouter une équipe</button>
-        {{ form_row(form.save) }}
+            <div class="button-container">
+                <button type="button" id="add-team" class="btn add-btn" {% if existingTeamsCount + form.teams|length >= 8 %}disabled{% endif %}>
+                    Ajouter une équipe
+                </button>
+                {{ form_row(form.save, {'attr': {'class': 'btn save-btn'}}) }}
+            </div>
 
-        {{ form_end(form) }}
+            {{ form_end(form) }}
 
-        <a href="{{ path('app_team_show_all', {'tournamentId': tournament.id}) }}">Retour à la liste des équipes</a>
+            <div class="back-button">
+                <a href="{{ path('app_tournament_show', {'id': tournament.id}) }}">← Retourner au tournoi</a>
+            </div>
+        </section>
     </div>
 
+    <!-- Popup (Modale) -->
+    <div id="image-popup" class="popup">
+        <div class="popup-content">
+            <span class="close-popup">&times;</span>
+            <div class="popup-images">
+                {% for file in svgFiles %}
+                    {% set teamName = file|replace({'.svg': ''}) %}
+                    <img src="{{ asset('build/images/team/' ~ file) }}" class="popup-team-logo" data-name="{{ teamName }}" alt="{{ teamName }}" />
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <style>
+        {{ parent() }}
+    </style>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const teamList = document.getElementById('team-list');
-            const addTeamButton = document.getElementById('add-team');
-            const prototype = teamList.dataset.prototype;
-
-            // Fonction pour ajouter une nouvelle équipe
-            addTeamButton.addEventListener('click', function () {
-                const newForm = prototype.replace(/__name__/g, teamList.children.length);
-                const newFormContainer = document.createElement('div');
-                newFormContainer.classList.add('team-item');
-                newFormContainer.innerHTML = newForm;
-
-                // Ajouter un nouvel input et l'ajouter à la liste
-                teamList.appendChild(newFormContainer);
-
-                // Attacher l'image pour la nouvelle équipe
-                const newTeamFormIndex = teamList.children.length - 1; // index de la nouvelle équipe
-                attachImageSelectionToNewTeam(newTeamFormIndex);
-            });
-
-            // Attacher un gestionnaire d'événements aux images pour la sélection de l'équipe
-            function attachImageSelectionToNewTeam(teamIndex) {
-                // Seuls les événements des nouvelles équipes sont ajoutés ici
-                document.querySelectorAll('.team-logo').forEach(img => {
-                    img.addEventListener('click', function () {
-                        // Enlever la sélection de toutes les images
-                        document.querySelectorAll('.team-logo').forEach(el => el.classList.remove('selected'));
-
-                        // Ajouter la classe 'selected' à l'image cliquée
-                        this.classList.add('selected');
-
-                        // Récupérer l'id de l'équipe associée à l'image cliquée (data-team-id)
-                        const teamId = this.dataset.teamId;
-
-                        // Mettre à jour uniquement l'input correspondant à cette équipe
-                        document.querySelectorAll('.team-input-' + teamId).forEach(input => {
-                            input.value = this.dataset.name; // Met à jour le champ avec le nom de l'image
-                        });
-                    });
-                });
-            }
-
-            // Attacher l'image au premier ensemble d'input lors du chargement initial
-            document.querySelectorAll('.team-logo').forEach(img => {
-                img.addEventListener('click', function () {
-                    // Enlever la sélection de toutes les images
-                    document.querySelectorAll('.team-logo').forEach(el => el.classList.remove('selected'));
-                    // Ajouter la classe 'selected' à l'image cliquée
-                    this.classList.add('selected');
-
-                    // Récupérer l'id de l'équipe associée à l'image cliquée (data-team-id)
-                    const teamId = this.dataset.teamId;
-
-                    // Mettre à jour l'input correspondant à cette équipe
-                    document.querySelectorAll('.team-input-' + teamId).forEach(input => {
-                        input.value = this.dataset.name; // Met à jour le champ avec le nom de l'image
-                    });
-                });
-            });
-        });
+        {{ encore_entry_script_tags('app') }}
     </script>
 {% endblock %}

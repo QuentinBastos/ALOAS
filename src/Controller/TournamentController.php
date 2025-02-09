@@ -97,13 +97,11 @@ class TournamentController extends AbstractController
         ]);
     }
 
-
     #[Route('/{id}/update-scores', name: 'app_tournament_update_scores', methods: ['POST'])]
     public function updateScores(Request $request, Tournament $tournament): Response
     {
         $matches = $this->em->getRepository(TeamMatchResult::class)->findBy([
-            'tournament' => $tournament,
-            'phase' => '1', // Phase actuelle (modifier selon la gestion des phases)
+            'tournament' => $tournament
         ]);
 
         $allScoresFilled = true;
@@ -131,13 +129,12 @@ class TournamentController extends AbstractController
 
         $this->em->flush();
 
-        // Si tous les scores sont remplis, on génère la phase suivante
+        // Générer la phase suivante si tous les scores sont remplis
         if ($allScoresFilled) {
             $this->generateMatch->generateNextPhase($tournament);
         }
 
         return $this->redirectToRoute('app_tournament_show', ['id' => $tournament->getId()]);
     }
-
 
 }
