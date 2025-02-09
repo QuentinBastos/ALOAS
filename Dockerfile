@@ -33,6 +33,7 @@ COPY . /var/www/html
 RUN rm -rf /var/www/html/vendor
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+RUN chmod +x /var/www/html/node_modules/.bin/encore
 
 RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --optimize-autoloader
 
