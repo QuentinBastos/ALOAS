@@ -14,20 +14,40 @@
                 <p>Créer un tournois</p>
             </a>
             <h1 class="flex items-center text-[#19864e] ">Derniers Match</h1>
-            <a href="{{ path('app_tournament_add') }}" class="flex bg-[--bg-green-light] items-center justify-center
-             gap-4 rounded px-2 py-1 text-white text-base">
-                <img src="{{ asset('build/images/icons/cupWhite.svg') }}" alt="ajout tournois" width="14px" >
-                <p>Créer tournois</p>
-            </a>
+            <form action="{{ path('app_home') }}" method="GET" class="flex flex-col items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <input type="date" id="dateFilter" name="dateFilter" class="px-2 py-1 rounded border text-sm" value="{{ app.request.query.get('dateFilter') }}">
+                    <button type="submit" class="bg-[--bg-green-dark] text-sm text-white rounded px-4 py-2">Filtrer</button>
+                </div>
+            </form>
+
         </div>
 
-        <ul class="flex flex-col gap-4 w-full items-center grid lg:grid-cols-2 grid-cols-1 justify-center gap-8 px-12 pb-6">
-            {% for index in 1..10 %}
-                <li class="h-[12.5vh]">
-                    {% include 'components/cardMatch.html.twig' %}
-                </li>
-            {% endfor %}
-        </ul>
+        {% if teamMatchResults is not empty %}
+            <ul class="flex flex-col gap-4 w-full items-center grid lg:grid-cols-2 grid-cols-1 justify-center gap-8 px-12 pb-6">
+                {% for result in teamMatchResults %}
+                    <li class="h-[12.5vh]">
+                        <div class="h-full w-auto flex flex-col border-2 rounded shadow py-2">
+                            <div class="h-[5%] w-full flex items-center justify-center">
+                                <p class="font-base text-sm">{{ result.tournament.sport.name }}</p>
+                            </div>
+                            <div class="flex items-center justify-around h-[95%]">
+                                <img src="{{ asset('build/images/team/' ~ result.home.name|lower ~ '.svg') }}" alt="{{ result.home.name }}" class="h-full" />
+                                <p class="{{ result.winner == result.home ? 'text-gold' : '' }}">{{ result.homeScore }}</p>
+                                <p>VS</p>
+                                <img src="{{ asset('build/images/team/' ~ result.visitor.name|lower ~ '.svg') }}" alt="{{ result.visitor.name }}" class="h-full" />
+                                <p class="{{ result.winner == result.visitor ? 'text-gold' : '' }}">{{ result.visitorScore }}</p>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+
+        {% else %}
+            <p>Aucun match trouvé.</p>
+        {% endif %}
+
+
     </div>
 {% endblock %}
 
