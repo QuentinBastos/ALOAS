@@ -8,11 +8,13 @@
     </div>
     <div class="flex w-full h-screen container mx-auto flex flex-col items-center pt-6 text-xl font-medium main-content">
         <div class="flex w-full justify-between px-8 pb-14">
+            {% if app.user %}
             <a href="{{ path('app_tournament_add') }}" class="flex bg-[--bg-green-light] items-center justify-center
              gap-4 rounded px-2 text-white text-base">
                 <img src="{{ asset('build/images/icons/cupWhite.svg') }}" alt="ajout tournois" width="14px" >
-                <p>Créer un tournois</p>
+                <p>Créer un tournoi</p>
             </a>
+            {% endif %}
             <h1 class="flex items-center text-[#19864e] text-2xl">Liste des Tournois</h1>
             <div class="flex justify-center">
                 {{ form_start(filterForm, {'attr': {'class': 'flex flex-col items-center gap-4'}}) }}
@@ -45,23 +47,11 @@
 
 {% block stylesheets %}
     {{ parent() }}
-
-    <style>
-        select {
-            border-color: var(--bg-green-light);
-            border-width: 3px;
-            border-radius: 7px;
-            padding: 2px 18px 2px 4px;
-
-            &:hover {
-                opacity: 100%;
-            }
-        }
-    </style>
+    {{ encore_entry_link_tags('tournament_css') }}
 {% endblock %}
 
 {% block javascripts %}
-    {{ encore_entry_script_tags('app') }}
+    {{ parent() }}
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
