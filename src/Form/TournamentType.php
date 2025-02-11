@@ -5,6 +5,7 @@
 namespace App\Form;
 
 use App\Entity\Sport;
+use App\Entity\Tournament;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -76,7 +77,7 @@ class TournamentType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => null,
+            'data_class' => Tournament::class,
         ]);
     }
 }

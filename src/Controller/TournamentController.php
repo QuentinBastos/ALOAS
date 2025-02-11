@@ -35,12 +35,7 @@ class TournamentController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $tournament = new Tournament();
-            $tournament->setName($data['name']);
-            $tournament->setLocation($data['location']);
-            $tournament->setSport($data['sport']);
-            $tournament->setDate($data['date']);
+            $tournament = $form->getData();
 
             $this->em->persist($tournament);
             $this->em->flush();
