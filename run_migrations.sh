@@ -26,4 +26,8 @@ php /var/www/html/bin/console doctrine:migrations:migrate --no-interaction --all
 
 echo "✅ Migrations applied successfully!"
 
+
+echo "⚙️ Add sports to database..."
+php /var/www/html/bin/console app:import-sports
+
 exec "$@"
