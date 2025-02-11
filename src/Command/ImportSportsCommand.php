@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Entity\Sport;
+use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -27,8 +28,15 @@ class ImportSportsCommand extends Command
             ->setDescription('Imports sports from a YAML file into the Sport table');
     }
 
+    /**
+     * @throws Exception
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $connection = $this->em->getConnection();
+        $platform = $connection->getDatabasePlatform();
+        $connection->executeStatement($platform->getTruncateTableSQL('sport', true));
+
         $yamlFile = __DIR__ . '/../../config/sports.yaml';
         $sportsData = Yaml::parseFile($yamlFile)['sports'];
 

@@ -16,7 +16,7 @@ services:
       - DB_USER=${DB_USER}
       - DB_PASS=${DB_PASS}
       - DB_NAME=${DB_NAME}
-    command: [ "sh", "-c", "/usr/local/bin/init.sh && apache2-foreground" ]
+    command: [ "sh", "-c", "/usr/local/bin/init.sh && php bin/console app:import-sports && apache2-foreground" ]
 
 volumes:
   vendor:

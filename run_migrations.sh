@@ -26,6 +26,4 @@ php /var/www/html/bin/console doctrine:migrations:migrate --no-interaction --all
 
 echo "✅ Migrations applied successfully!"
 
-php /var/www/html/scripts/check_and_import_sports.php
-
 exec "$@"
