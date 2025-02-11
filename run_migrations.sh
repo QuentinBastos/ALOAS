@@ -24,8 +24,10 @@ php /var/www/html/bin/console doctrine:migrations:migrate --no-interaction --all
     php /var/www/html/bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
 }
 
-echo "✅ Migrations applied successfully!"
+echo "⚙️ Updating database schema..."
+php /var/www/html/bin/console doctrine:schema:update --force
 
+echo "✅ Migrations and schema update applied successfully!"
 
 echo "⚙️ Add sports to database..."
 php /var/www/html/bin/console app:import-sports
