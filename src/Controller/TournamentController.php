@@ -51,7 +51,6 @@ class TournamentController extends AbstractController
     }
 
     #[Route('/list', name: 'app_tournament_list')]
-    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function list(Request $request): Response
     {
         $form = $this->createForm(TournamentFilterType::class);
