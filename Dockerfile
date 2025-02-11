@@ -6,10 +6,11 @@ RUN apt-get update && apt-get install -y \
   unzip \
   libpng-dev \
   libzip-dev \
-  default-mysql-client \
   nano \
   dos2unix \
-  curl && \
+  curl \
+  postgresql-client \
+  libpq-dev && \
   apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update && apt-get upgrade -y && \
@@ -19,10 +20,7 @@ RUN apt-get update && apt-get upgrade -y && \
 
 RUN npm install -g npm
 
-RUN docker-php-ext-install pdo pdo_mysql zip gd
-
-# Enable Apache mod_rewrite
-RUN a2enmod rewrite
+RUN docker-php-ext-install pdo pdo_pgsql zip gd
 
 WORKDIR /var/www/html
 
@@ -35,6 +33,7 @@ COPY . /var/www/html
 RUN rm -rf /var/www/html/vendor
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+RUN chmod +x /var/www/html/node_modules/.bin/encore
 
 RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --optimize-autoloader
 
@@ -51,7 +50,7 @@ RUN chmod +x /usr/local/bin/wait-for-it.sh /usr/local/bin/init.sh && \
 
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 
-RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
+RUN a2enmod rewrite
 
 EXPOSE 80
 
