@@ -21,7 +21,7 @@ class TournamentController extends AbstractController
 
     public function __construct(
         private readonly EntityManagerInterface $em,
-        private readonly GenerateMatch $generateMatch,
+        private readonly GenerateMatch          $generateMatch,
     )
     {
     }
@@ -54,6 +54,7 @@ class TournamentController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
     #[Route('/list', name: 'app_tournament_list')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function list(Request $request): Response
@@ -64,10 +65,7 @@ class TournamentController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $selectedSports = $form->get('sports')->getData();
-
-            $tournaments = $this->em->getRepository(Tournament::class)->findBy([
-                'sport' => $selectedSports,
-            ]);
+            $tournaments = $this->em->getRepository(Tournament::class)->findWithFilter($selectedSports);
         } else {
             $tournaments = $this->em->getRepository(Tournament::class)->findAll();
         }
@@ -114,10 +112,9 @@ class TournamentController extends AbstractController
             $visitorScore = $request->request->get("visitor_score_{$match->getId()}");
 
             if ($homeScore !== null && $visitorScore !== null) {
-                $match->setHomeScore((int) $homeScore);
-                $match->setVisitorScore((int) $visitorScore);
+                $match->setHomeScore((int)$homeScore);
+                $match->setVisitorScore((int)$visitorScore);
 
-                // Définir le gagnant
                 if ($homeScore > $visitorScore) {
                     $match->setWinner($match->getHome());
                 } elseif ($visitorScore > $homeScore) {
@@ -132,7 +129,6 @@ class TournamentController extends AbstractController
 
         $this->em->flush();
 
-        // Générer la phase suivante si tous les scores sont remplis
         if ($allScoresFilled) {
             $this->generateMatch->generateNextPhase($tournament);
         }

@@ -18,8 +18,9 @@ class TeamController extends AbstractController
 {
     public function __construct(
         private readonly EntityManagerInterface $em,
-        private readonly GenerateMatch $generateMatch,
-    ) {
+        private readonly GenerateMatch          $generateMatch,
+    )
+    {
     }
 
     #[Route('/add/{tournamentId}', name: 'app_team_add')]
@@ -31,14 +32,11 @@ class TeamController extends AbstractController
             throw $this->createNotFoundException('Tournoi non trouvé.');
         }
 
-        // Récupérer le nombre d'équipes existantes
         $existingTeamsCount = $tournament->getTeams()->count();
 
-        // Créez un tableau pour stocker les équipes
         $teams = new ArrayCollection();
-        $teams->add(new Team()); // Ajoutez une première équipe vide
+        $teams->add(new Team());
 
-        // Créez un formulaire pour gérer plusieurs équipes
         $form = $this->createForm(TeamCollectionType::class, ['teams' => $teams]);
         $form->handleRequest($request);
 
@@ -65,7 +63,7 @@ class TeamController extends AbstractController
             'form' => $form->createView(),
             'tournament' => $tournament,
             'svgFiles' => $svgFiles,
-            'existingTeamsCount' => $existingTeamsCount, // Passer le nombre d'équipes existantes au template
+            'existingTeamsCount' => $existingTeamsCount,
         ]);
     }
 
