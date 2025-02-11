@@ -15,8 +15,6 @@ echo "Using database: $DB_NAME"
 
 sleep 5
 
-php /var/www/html/bin/console doctrine:schema:drop --force
-
 echo "⚙️ Running database migrations..."
 php /var/www/html/bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration || {
     echo "❌ Migration failed. Retrying in 5 seconds..."
@@ -31,5 +29,8 @@ echo "✅ Migrations and schema update applied successfully!"
 
 echo "⚙️ Add sports to database..."
 php /var/www/html/bin/console app:import-sports
+
+echo "⚙️ Add user to database..."
+php /var/www/html/bin/console app:import-user "$USER_NAME" "$USER_PASS"
 
 exec "$@"

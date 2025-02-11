@@ -38,6 +38,13 @@ class ImportUserCommand extends Command
         $username = $input->getArgument('username');
         $password = $input->getArgument('password');
 
+        $existingUser = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $username]);
+
+        if ($existingUser) {
+            $output->writeln('User with this username already exists.');
+            return Command::FAILURE;
+        }
+
         $user = new User();
         $user->setUsername($username);
         $user->setPassword($this->passwordHasher->hashPassword($user, $password));

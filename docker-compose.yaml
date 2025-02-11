@@ -16,6 +16,8 @@ services:
       - DB_USER=${DB_USER}
       - DB_PASS=${DB_PASS}
       - DB_NAME=${DB_NAME}
+      - USER_NAME=${USER_NAME}
+      - USER_PASS=${USER_PASS}
     command: [ "sh", "-c", "/usr/local/bin/init.sh && apache2-foreground" ]
 
 volumes:
