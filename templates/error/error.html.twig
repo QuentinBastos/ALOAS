@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}ALOAS Gestion de tournoi{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}ALOAS SAE TOURNOI LYON1 VALETTE IUT {% endblock %}">
+    <meta name="author" content="{% block meta_author %}ALOAS{% endblock %}">
+    <meta name="robots" content="{% block meta_robots %}index, follow{% endblock %}">
+    <meta name="generator" content="ALOAS">
+    <link rel="canonical" href="{% block canonical %}{{ app.request.uri }}{% endblock %}">
+
+    <link rel="icon"
+          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+    <script src="https://kit.fontawesome.com/85b48dec81.js" crossorigin="anonymous"></script>
+</head>
+<body class="w-full h-screen">
+<section class="flex items-center h-full p-16 dark:bg-gray-50 dark:text-gray-800">
+    <div class="container flex flex-col items-center justify-center px-5 mx-auto my-8">
+        <div class="max-w-md text-center">
+            <h2 class="mb-8 font-extrabold text-9xl dark:text-gray-400">
+                <span class="sr-only">Erreur</span>{{ code }}
+            </h2>
+            <p class="text-2xl font-semibold md:text-3xl">La page que vous cherchez n'existe pas.</p>
+            <p class="mt-4 mb-8 dark:text-gray-600">Ne vous en faites pas, cela arrive aux meilleurs d'entre nous.</p>
+            <a rel="noopener noreferrer" href="{{ path('app_home') }}"
+               class="px-8 py-3 font-semibold rounded bg-[--bg-green-light] text-white">Retour à l'accueil</a>
+        </div>
+    </div>
+</section>
+{% block stylesheets %}
+    {{ encore_entry_link_tags('app_css') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
+</body>
+</html>
