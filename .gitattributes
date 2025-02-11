@@ -4,3 +4,6 @@ init.sh merge=ours
 wait-for-it.sh merge=ours
 package.json merge=ours
 bundles.php merge=ours
+config/packages/framework.yaml merge=ours
+templates/error/error.html.twig merge=ours
+src/Controller/ErrorController.php merge=ours
