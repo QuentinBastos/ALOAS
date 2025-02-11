@@ -1,17 +1,48 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Inscription{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <div class="w-full h-[91vh] flex flex-col items-center justify-center">
+        <section class="container mx-auto max-w-[340px] max-h-[380px] h-3/4 rounded-lg flex flex-col mt-2">
+            <div class="w-340 h-2 bg-[--bg-green-light] rounded-t-lg"></div>
+            <div class="rounded-t px-4 pt-4">
+                <h1 class="h-[30%] font-bold text-xl mb-2">Inscription</h1>
+                <p class="text-sm">Créez votre compte en remplissant les champs ci-dessous.</p>
+            </div>
 
-    {{ form_errors(registrationForm) }}
+            <form method="post" class="h-full flex flex-col pb-4 px-4 justify-between">
+                {{ form_start(registrationForm) }}
+                <div class="flex flex-col gap-6 mt-4">
+                    <div>
+                        {{ form_label(registrationForm.username, 'Nom d\'utilisateur', {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                        {{ form_widget(registrationForm.username, {'attr': {'class': 'w-full border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500'}}) }}
+                    </div>
+                    <div>
+                        {{ form_label(registrationForm.plainPassword, 'Mot de passe', {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                        {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'w-full border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500'}}) }}
+                    </div>
+                </div>
 
-    {{ form_start(registrationForm) }}
-    {{ form_row(registrationForm.username) }}
-    {{ form_row(registrationForm.plainPassword, {
-        label: 'Password'
-    }) }}
-    <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+                <div class="w-full flex font-medium justify-between gap-4 mt-4">
+                    <a href="{{ path('app_login') }}"
+                       class="flex bg-slate-300 items-center justify-center w-1/2 gap-4 rounded px-2 text-sm py-1 ">
+                        <p class="text-slate-500">Se connecter</p>
+                    </a>
+                    <button class="flex bg-[--bg-green-light] text-white items-center justify-center w-1/2 gap-4 rounded px-2 text-sm py-1 "
+                            type="submit">S'inscrire
+                    </button>
+                </div>
+                {{ form_end(registrationForm) }}
+            </form>
+        </section>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
 {% endblock %}

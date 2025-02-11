@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter des équipes{% endblock %}
+
+{% block body %}
+    {% include 'partial/header.html.twig' %}
+    {% include 'partial/rightAside.html.twig' %}
+
+    <div class="w-full h-[91vh] flex items-center justify-center ">
+        <section class="container mx-auto max-w-[340px] max-h-[380px] h-3/4 rounded-lg flex flex-col rounded border-t-4
+        border-[--bg-green-light] px-4 pt-2">
+            <div class="h-1/4">
+                <h1>Ajouter des équipes</h1>
+                <p class="step-text">Ajouter une ou plusieurs équipes. Vous pouvez ajouter plusieurs équipes à la fois.</p>
+            </div>
+
+            {{ form_start(form, {'attr': {'class': 'flex flex-col h-3/4 justify-between py-2'}}) }}
+
+            <div id="team-list" class="team-list" data-prototype="{{ form_widget(form.teams.vars.prototype)|e('html_attr') }}">
+                {% for teamForm in form.teams %}
+                    <div class="team-item" data-team-index="{{ loop.index0 }}">
+                        <p>{{ loop.index0 }}. Equipe</p>
+                        <div class="image-placeholder" data-team-index="{{ loop.index0 }}">
+                            <img src="" alt="" class="team-preview">
+                            {% if loop.index0 != 0 %}
+                                <button type="button" class="remove-team btn">
+                                    &times;
+                                </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {{ form_row(teamForm.name, {'attr': {'class': 'selected-team-name hidden', 'data-team-index': loop.index0}}) }}
+                {% endfor %}
+            </div>
+
+            <div class="button-container">
+                <button type="button" id="add-team" class="btn add-btn" {% if existingTeamsCount + form.teams|length >= 8 %}disabled{% endif %}>
+                    Ajouter une équipe
+                </button>
+                {{ form_row(form.save, {'attr': {'class': 'btn save-btn'}}) }}
+            </div>
+
+            {{ form_end(form) }}
+
+            <div class="back-button">
+                <a href="{{ path('app_tournament_show', {'id': tournament.id}) }}">← Retourner au tournoi</a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Popup (Modale) -->
+    <div id="image-popup" class="popup">
+        <div class="popup-content">
+            <span class="close-popup">&times;</span>
+            <div class="popup-images">
+                {% for file in svgFiles %}
+                    {% set teamName = file|replace({'.svg': ''}) %}
+                    <img src="{{ asset('build/images/team/' ~ file) }}" class="popup-team-logo" data-name="{{ teamName }}" alt="{{ teamName }}" />
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <style>
+        {{ parent() }}
+    </style>
+
+    <script>
+        {{ encore_entry_script_tags('app') }}
+    </script>
+{% endblock %}

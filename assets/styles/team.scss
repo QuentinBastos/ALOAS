@@ -1,0 +1,154 @@
+.wrapper {
+  width: 100vw;
+  height: 91vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.selected-team-name {
+  visibility: hidden;
+}
+
+/* En-tête */
+.header {
+  height: 25%;
+}
+
+.header h1 {
+  font-weight: 500;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.step-text {
+  font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 16px;
+}
+
+/* Liste des équipes */
+.team-list {
+  height: 75%;
+  overflow-y: auto;
+}
+
+.team-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px 16px;
+  margin-bottom: 8px;
+}
+
+/* Placeholder d'image */
+.image-placeholder {
+  width: 48px;
+  height: 48px;
+  border: 2px solid var(--bg-green-light);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.team-preview {
+  width: 100%;
+  height: auto;
+  padding: 0.2em;
+}
+
+/* Boutons */
+.button-container {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.btn {
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+
+.remove-team {
+  background-color: rgb(185 28 28 / var(--tw-bg-opacity, 1));
+  color: white;
+}
+
+.add-btn {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+}
+
+.save-btn {
+  background-color: var(--bg-green-light);
+  color: white;
+}
+
+/* Bouton retour */
+.back-button {
+  position: absolute;
+  top: 20vh;
+  left: 16px;
+  opacity: 0.7;
+  background-color: #ddd;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: transform 0.2s;
+}
+
+.back-button:hover {
+  transform: scale(1.1);
+}
+
+/* Popup */
+.popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  width: 70%;
+  height: 50%;
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  position: relative;
+  overflow-y: auto;
+}
+
+.popup-images {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.popup-images img {
+  width: 64px;
+  height: 64px;
+  margin: 4px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 7px;
+}
+
+.close-popup {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  cursor: pointer;
+  font-size: 20px;
+}

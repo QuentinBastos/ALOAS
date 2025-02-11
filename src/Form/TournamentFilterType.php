@@ -17,6 +17,8 @@ class TournamentFilterType extends AbstractType
             ->add('sports', EntityType::class, [
                 'class' => Sport::class,
                 'choice_label' => 'name',
+                // add default choice with null
+                'placeholder' => 'Tous les sports',
                 'row_attr' => [
                     'class' => 'flex items-center gap-2 ',
                 ],

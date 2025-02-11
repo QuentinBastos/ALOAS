@@ -1,0 +1,176 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tournoi - {{ tournament.name }}{% endblock %}
+
+{% block body %}
+    {% include 'partial/header.html.twig' %}
+    {% include 'partial/rightAside.html.twig' %}
+    <div class="shadow">
+        {% include 'partial/doubleNav.html.twig' %}
+    </div>
+    <div class="flex w-full h-screen container mx-auto flex flex-row gap-8 pt-6 text-xl font-medium main-content">
+        <div class="w-[80%] flex flex-col items-center">
+            <h1 class="text-2xl font-bold text-[--bg-green-light]">Tournoi : {{ tournament.name }}</h1>
+            <ul class="flex w-full justify-between items-center mt-2">
+                <li class="flex text-gray-700">
+                    {% if tournament.sport.name == 'football' %}
+                        ⚽
+                    {% elseif tournament.sport.name == 'tennis' %}
+                        🎾
+                    {% elseif tournament.sport.name == 'basketball' %}
+                        🏀
+                    {% endif %}
+                    Sport : {{ tournament.sport.name }}
+                </li>
+                <li class="flex text-gray-700">Lieu : {{ tournament.location }}</li>
+                <li class="flex text-gray-700">Date : {{ tournament.date|date('d/m/Y') }}</li>
+            </ul>
+
+            <h2 class="text-xl font-bold mt-6">Matchs</h2>
+
+            {% if matches is empty %}
+                <p class="text-gray-500">Aucun match généré pour l'instant.</p>
+            {% else %}
+                <form class="w-full" action="{{ path('app_tournament_update_scores', {'id': tournament.id}) }}" method="POST">
+                    <div class="tournament-tree w-full">
+                        {% set maxPhases = (matches|map(m => m.phase))|reduce((carry, item) => item > carry ? item : carry, 1) %}
+
+                        {% for phase in maxPhases..1 %}
+                            <div class="phase phase-{{ phase }}">
+                                <h2 class="text-center text-xl font-bold my-4">Phase {{ phase }}</h2>
+                                <div class="matches">
+                                    {% for match in matches %}
+                                        {% if match.phase == phase %}
+                                            <div class="h-full w-full flex items-center justify-around border-2 rounded shadow py-2 px-2 gap-2 bg-white">
+                                                <img src="{{ asset('build/images/team/' ~ match.home.name|lower ~ '.svg') }}" alt="{{ match.home.name }}" class="h-12 w-12 object-contain">
+
+                                                <input type="number" name="home_score_{{ match.id }}" value="{{ match.homeScore ?? '' }}" class="w-12 text-center border border-gray-300 rounded">
+
+                                                <p class="font-bold text-lg">/</p>
+
+                                                <input type="number" name="visitor_score_{{ match.id }}" value="{{ match.visitorScore ?? '' }}" class="w-12 text-center border border-gray-300 rounded">
+
+                                                <img src="{{ asset('build/images/team/' ~ match.visitor.name|lower ~ '.svg') }}" alt="{{ match.visitor.name }}" class="h-12 w-12 object-contain">
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="text-center my-6">
+                        <button type="submit" class="px-6 py-2 bg-[--bg-green-dark] text-white rounded shadow">Valider les scores</button>
+                    </div>
+                </form>
+
+
+            {% endif %}
+        </div>
+
+        <div class="flex flex-col w-[20%] top-[20vh] right-4 gap-8">
+            <div class="flex flex-col items-center flex flex-col items-center justify-between rounded shadow-md">
+                <h2 class="flex items-center justify-center text-sm font-bold bg-[--bg-green-dark] text-white w-full px-2 py-2 rounded-t">Équipes participantes</h2>
+                <ul class="w-full mt-2 px-2">
+                    {% for key, team in teams %}
+                        <li class="flex items-center w-full justify-between text-sm">
+                            <p>{{ key + 1 }}: Equipe</p>
+                            <img class="w-[24px]" src="{{ asset('build/images/team/' ~ team.name ~ '.svg') }}" alt={{ team.name }} >
+                        </li>
+
+                    {% else %}
+                        <li class="text-gray-500">Aucune équipe inscrite.</li>
+                    {% endfor %}
+                </ul>
+
+                <a href="{{ path('app_team_add', {'tournamentId': tournament.id}) }}" class="mt-4 text-white
+             bg-[--bg-green-light] px-2 mb-2 py-2 rounded text-sm">
+                    + Modifier l'équipe
+                </a>
+            </div>
+            <div class="flex flex-col items-center justify-between rounded shadow-md bg-white">
+                <h2 class="flex items-center justify-center text-sm font-bold bg-[--bg-green-dark] text-white w-full px-2 py-2 rounded-t">Chronos</h2>
+
+                <p id="timerDisplay" class="text-2xl font-bold my-2">00:00</p>
+
+                <div class="flex space-x-2 p-2">
+                    <button id="startStopBtn" class="px-4 py-2 bg-[--bg-green-light] text-white rounded text-sm">Démarrer</button>
+                    <button id="resetBtn" class=" p-2 bg-neutral-300 text-white rounded text-sm">Redémarrer</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style>
+        .tournament-tree {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .phase {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .matches {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let timer;
+            let isRunning = false;
+            let seconds = 0;
+
+            function updateDisplay() {
+                let mins = Math.floor(seconds / 60).toString().padStart(2, "0");
+                let secs = (seconds % 60).toString().padStart(2, "0");
+                document.getElementById("timerDisplay").innerText = `${mins}:${secs}`;
+            }
+
+            function startStopTimer() {
+                const btn = document.getElementById("startStopBtn");
+
+                if (isRunning) {
+                    clearInterval(timer);
+                    btn.innerText = "Démarrer";
+                    btn.classList.replace("bg-red-500", "bg-blue-500");
+                } else {
+                    timer = setInterval(() => {
+                        seconds++;
+                        updateDisplay();
+                    }, 1000);
+                    btn.innerText = "Arrêter";
+                    btn.classList.replace("bg-blue-500", "bg-red-500");
+                }
+                isRunning = !isRunning;
+            }
+
+            function resetTimer() {
+                clearInterval(timer);
+                seconds = 0;
+                isRunning = false;
+                updateDisplay();
+                const btn = document.getElementById("startStopBtn");
+                btn.innerText = "Démarrer";
+                btn.classList.replace("bg-red-500", "bg-blue-500");
+            }
+
+            document.getElementById("startStopBtn").addEventListener("click", startStopTimer);
+            document.getElementById("resetBtn").addEventListener("click", resetTimer);
+        });
+    </script>
+{% endblock %}

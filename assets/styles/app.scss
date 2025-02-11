@@ -3,6 +3,7 @@
 @tailwind utilities;
 @import "aside";
 @import "form";
+@import "team";
 
 @layer utilities  {
   :root {
@@ -13,6 +14,8 @@
     --bg-green-hover: #E8FFEA;
     --bg-brown-mid: #875B4E;
   }
+
+
 
 
   .full-width {

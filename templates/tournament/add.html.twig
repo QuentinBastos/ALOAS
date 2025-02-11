@@ -5,7 +5,7 @@
 {% block body %}
     {% include 'partial/header.html.twig' %}
     {% include 'partial/rightAside.html.twig' %}
-    <div class="w-screen h-[91vh] flex items-center justify-center ">
+    <div class="w-full h-[91vh] flex items-center justify-center ">
         <section class="container mx-auto max-w-[340px] max-h-[380px] h-3/4 rounded-lg flex flex-col">
             <div class="rounded-t">
                 <div class="w-full flex pb-4">
@@ -27,7 +27,7 @@
 
             {{ form_start(form, {'attr': {'class': 'h-full flex flex-col pb-4'}}) }}
 
-            <div id="tournamentForm" class="px-4 h-full flex flex-col justify-between">
+            <div id="tournamentForm" class="px-4 h-full flex flex-col justify-between align-beetween">
 
                 <!-- Step 1 -->
                 <div class="form-step h-full flex flex-col justify-between" id="step-1" style="display: flex;">
@@ -90,5 +90,5 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{ encore_entry_script_tags('app') }}
+    {{ parent() }}
 {% endblock %}

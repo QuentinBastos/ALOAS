@@ -1,4 +1,4 @@
-<nav class="shadow h-[9vh] flex items-center">
+<nav class="h-[9vh] flex items-center bg-[--bg-green-dark] border-[--bg-green-dark] border-b-4">
     <div class=" mx-4 flex w-full justify-between items-center">
         <div class="menu-burger flex items-center gap-4">
             <div class="rounded-full hover:bg-[--bg-green-hover] cursor-pointer p-2">
@@ -12,7 +12,7 @@
             </div>
             <a href="{{ path('app_home') }}" class="flex items-center justify-center gap-2 cursor-pointer">
                 <img src="{{ asset('build/images/aloas-logo.png') }}" alt="Logo" class="h-[5vh]">
-                <h1 class="text-[#19864e] text-2xl font-bold">ALOAS</h1>
+                <h1 class="text-white text-2xl font-bold">ALOAS</h1>
             </a>
         </div>
         <div>
@@ -21,18 +21,18 @@
                     <a href="{{ path('app_logout') }}"
                        class="flex items-center justify-center py-1 px-2 gap-2 cursor-pointer">
                         <img src="{{ asset('build/images/icons/login.svg') }}" alt="account" width="16">
-                        <p class=" sm:flex hidden text-md font-medium text-[#19864e]">Se déconnecter</p>
+                        <p class=" sm:flex hidden text-md font-medium text-white">Se déconnecter</p>
                     </a>
                 {% else %}
                     <a href="{{ path('app_login') }}"
                        class="flex items-center justify-center py-1 px-2 gap-2 cursor-pointer">
                         <img src="{{ asset('build/images/icons/login.svg') }}" alt="account" width="16">
-                        <p class="sm:flex hidden text-md font-medium text-[#19864e]">Se connecter</p>
+                        <p class="sm:flex hidden text-md font-medium text-white">Se connecter</p>
                     </a>
                 {% endif %}
                 <a id="buttonAside" class="flex items-center justify-center py-1 px-2 gap-2 cursor-pointer">
-                    <img src="{{ asset('build/images/icons/login.svg') }}" alt="account" width="16">
-                    <p class="sm:flex hidden text-md font-medium text-[#19864e]">Assistance</p>
+                    <img src="{{ asset('build/images/icons/help.svg') }}" alt="account" width="24">
+                    <p class="sm:flex hidden text-md font-medium text-white">Assistance</p>
                 </a>
             </div>
         </div>
