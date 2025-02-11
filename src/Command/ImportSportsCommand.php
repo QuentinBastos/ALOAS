@@ -33,17 +33,16 @@ class ImportSportsCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $connection = $this->em->getConnection();
-        $platform = $connection->getDatabasePlatform();
-        $connection->executeStatement($platform->getTruncateTableSQL('sport', true));
-
         $yamlFile = __DIR__ . '/../../config/sports.yaml';
         $sportsData = Yaml::parseFile($yamlFile)['sports'];
 
         foreach ($sportsData as $sportData) {
-            $sport = new Sport();
-            $sport->setName($sportData['name']);
-            $this->em->persist($sport);
+            $existingSport = $this->em->getRepository(Sport::class)->findOneBy(['name' => $sportData['name']]);
+            if (!$existingSport) {
+                $sport = new Sport();
+                $sport->setName($sportData['name']);
+                $this->em->persist($sport);
+            }
         }
 
         $this->em->flush();
