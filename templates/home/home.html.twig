@@ -31,13 +31,13 @@
                             <div class="h-[5%] w-full flex items-center justify-center">
                                 <p class="font-base text-sm">{{ result.tournament.sport.name }}</p>
                             </div>
-                            <div class="flex items-center justify-around h-[95%]">
+                            <a  href="{{ path('app_tournament_show', { 'id': result.tournament.id }) }}"  class="flex items-center justify-around h-[95%]">
                                 <img src="{{ asset('build/images/team/' ~ result.home.name|lower ~ '.svg') }}" alt="{{ result.home.name }}" class="h-full" />
                                 <p class="{{ result.winner == result.home ? 'text-gold' : '' }}">{{ result.homeScore }}</p>
                                 <p>VS</p>
-                                <img src="{{ asset('build/images/team/' ~ result.visitor.name|lower ~ '.svg') }}" alt="{{ result.visitor.name }}" class="h-full" />
                                 <p class="{{ result.winner == result.visitor ? 'text-gold' : '' }}">{{ result.visitorScore }}</p>
-                            </div>
+                                <img src="{{ asset('build/images/team/' ~ result.visitor.name|lower ~ '.svg') }}" alt="{{ result.visitor.name }}" class="h-full" />
+                            </a>
                         </div>
                     </li>
                 {% endfor %}
