@@ -6,9 +6,11 @@ use App\Entity\Tournament;
 use App\Entity\TeamMatchResult;
 use Doctrine\ORM\EntityManagerInterface;
 
-class GenerateMatch
+readonly class GenerateMatch
 {
-    public function __construct(private readonly EntityManagerInterface $em)
+    public function __construct(
+        private EntityManagerInterface $em,
+    )
     {
     }
 
@@ -62,10 +64,10 @@ class GenerateMatch
 
     public function generateNextPhase(Tournament $tournament): void
     {
-        $currentPhase = (int) $tournament->getTeamMatchResults()->last()?->getPhase() ?? 1;
+        $currentPhase = (int)$tournament->getTeamMatchResults()->last()?->getPhase() ?? 1;
         $matches = $this->em->getRepository(TeamMatchResult::class)->findBy([
             'tournament' => $tournament,
-            'phase' => (string) $currentPhase,
+            'phase' => (string)$currentPhase,
         ]);
 
         $winningTeams = [];
@@ -85,7 +87,7 @@ class GenerateMatch
                     $match->setTournament($tournament);
                     $match->setHome($winningTeams[$i]);
                     $match->setVisitor($winningTeams[$i + 1]);
-                    $match->setPhase((string) $nextPhase);
+                    $match->setPhase((string)$nextPhase);
 
                     $this->em->persist($match);
                 } else {
