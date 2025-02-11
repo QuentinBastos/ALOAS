@@ -74,3 +74,21 @@ git push github main
 
 https://phpmyadmin.cluster021.hosting.ovh.net/index.php?pma_username=aloastg519&pma_servername=aloastg519.mysql.db
 
+
+## Postgres watcher SQL
+
+```sql
+    psql -U postgres
+          
+ ```
+```sql
+    CREATE USER aloas_user WITH PASSWORD 'Tb6fDk23MBM6jLr';
+```
+
+```sql
+    GRANT ALL PRIVILEGES ON DATABASE aloas TO aloas_user;
+```
+
+```sql
+    SELECT * FROM "user";
+```

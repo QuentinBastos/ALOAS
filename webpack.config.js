@@ -16,9 +16,11 @@ Encore
     .setPublicPath('/build')
 
     .addEntry('app', './assets/app.js')
+    .addEntry('timer', './assets/js/timer.js')
 
     .addStyleEntry('app_css', './assets/styles/app.scss')
     .addStyleEntry('aside_css', './assets/styles/aside.scss')
+    .addStyleEntry('tournament_css', './assets/styles/tournament.scss')
 
     .splitEntryChunks()
 
