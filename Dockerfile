@@ -23,7 +23,6 @@ RUN npm install -g npm
 
 RUN docker-php-ext-install pdo pdo_mysql pdo_pgsql zip gd
 
-# Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
 WORKDIR /var/www/html
@@ -55,10 +54,7 @@ COPY run_migrations.sh /usr/local/bin/run_migrations.sh
 RUN chmod +x /usr/local/bin/run_migrations.sh && \
     dos2unix /usr/local/bin/run_migrations.sh
 
-COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
-
-EXPOSE 80
-
+COPY scripts/check_and_import_sports.php /var/www/html/scripts/check_and_import_sports.php
 
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 
