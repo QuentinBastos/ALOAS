@@ -51,7 +51,7 @@ class TeamController extends AbstractController
             $this->em->flush();
 
             $this->addFlash('success', 'Équipes ajoutées avec succès !');
-            return $this->redirectToRoute('app_tournament_show', ['id' => $tournamentId]);
+            return $this->redirectToRoute('app_team_add', ['tournamentId' => $tournamentId]);
         }
 
         $svgDir = $this->getParameter('kernel.project_dir') . '/assets/images/team/';

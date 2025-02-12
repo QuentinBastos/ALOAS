@@ -18,6 +18,11 @@
         <div>
             <div class="flex">
                 {% if app.user %}
+                    <a href="{{ path('app_register') }}"
+                       class="flex items-center justify-center py-1 px-2 gap-2 cursor-pointer">
+                        <img src="{{ asset('build/images/icons/plus.svg') }}" alt="account" width="24">
+                        <p class="sm:flex hidden text-md font-medium text-white">Ajouter un utilisateur</p>
+                    </a>
                     <a href="{{ path('app_logout') }}"
                        class="flex items-center justify-center py-1 px-2 gap-2 cursor-pointer">
                         <img src="{{ asset('build/images/icons/login.svg') }}" alt="account" width="16">
