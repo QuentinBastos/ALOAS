@@ -33,10 +33,14 @@ class Tournament
     #[ORM\OneToMany(targetEntity: TeamMatchResult::class, mappedBy: 'tournament')]
     private Collection $teamMatchResults;
 
+    #[ORM\Column(type: 'json', nullable: true)]
+    private ?array $metadata = [];
+
     public function __construct()
     {
         $this->teams = new ArrayCollection();
         $this->teamMatchResults = new ArrayCollection();
+        $this->metadata = [];
     }
 
     public function getId(): int
@@ -108,5 +112,15 @@ class Tournament
             $this->teamMatchResults->add($teamMatchResult);
             $teamMatchResult->setTournament($this);
         }
+    }
+
+    public function getMetadata(): array
+    {
+        return $this->metadata ?? [];
+    }
+
+    public function setMetadata(?array $metadata): void
+    {
+        $this->metadata = $metadata;
     }
 }
