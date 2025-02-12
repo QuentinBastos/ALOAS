@@ -7,21 +7,20 @@
         {% include 'partial/doubleNav.html.twig' %}
     </div>
     <div class="flex w-full h-screen container mx-auto flex flex-col items-center pt-6 text-xl font-medium main-content">
-        <div class="flex w-full justify-between px-8 pb-14">
-            <a href="{{ path('app_tournament_add') }}" class="flex bg-[--bg-green-light] items-center justify-center
-             gap-4 rounded px-2 text-white text-base">
+        <div class="flex w-full justify-between px-8 pb-14 flex-col sm:flex-row gap-4">
+            <a href="{{ path('app_tournament_add') }}" class="flex bg-[--bg-green-light] items-center justify-center gap-4 rounded px-4 py-2 text-white text-base w-full sm:w-auto">
                 <img src="{{ asset('build/images/icons/cupWhite.svg') }}" alt="ajout tournois" width="14px" >
                 <p>Créer un tournois</p>
             </a>
-            <h1 class="flex items-center text-[#19864e] text-2xl">Liste des Tournois</h1>
-            <div class="flex justify-center">
-                {{ form_start(filterForm, {'attr': {'class': 'flex flex-col items-center gap-4'}}) }}
-                {{ form_row(filterForm.sports) }}
+            <h1 class="flex items-center text-[#19864e] text-2xl text-center sm:text-left">Liste des Tournois</h1>
+            <div class="flex justify-center sm:justify-start w-full sm:w-auto">
+                {{ form_start(filterForm, {'attr': {'class': 'flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto'}}) }}
+                {{ form_row(filterForm.sports, {'attr': {'class': 'w-full sm:w-auto'}}) }}
                 {{ form_end(filterForm) }}
             </div>
         </div>
 
-        <ul class=" gap-8 w-full items-center content-center grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 justify-center gap-8 px-12 pb-6">
+        <ul class="gap-8 w-full items-center content-center grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 justify-center px-12 pb-6 gap-8">
             {% for tournament in tournaments %}
                 <li>
                     <a href="{{ path('app_tournament_show', { 'id': tournament.id }) }}" class="block">
@@ -38,14 +37,11 @@
                 </li>
             {% endfor %}
         </ul>
-
     </div>
 {% endblock %}
 
-
 {% block stylesheets %}
     {{ parent() }}
-
     <style>
         select {
             border-color: var(--bg-green-light);
@@ -62,7 +58,6 @@
 
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
-
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const sportSelect = document.querySelector("select[name='tournament_filter[sports]']");
