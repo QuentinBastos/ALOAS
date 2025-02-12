@@ -15,7 +15,7 @@
                     <p>Créer un tournoi</p>
                 </a>
             {% endif %}
-            <h1 class="flex items-center text-[#19864e] sm:ml-8">Derniers Match</h1>
+            <h1 class="hidden sm:flex items-center text-[#19864e] sm:ml-8">Derniers Match</h1>
             <form action="{{ path('app_home') }}" method="GET"
                   class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto">
                 <div class="sm:flex sm:justify-center items-center gap-2 w-full">
@@ -27,7 +27,7 @@
                     </button>
                 </div>
             </form>
-            <h1 class="sm:hide flex items-center text-[#19864e] sm:ml-8">Derniers Match</h1>
+            <h1 class="sm:hidden flex justify-center text-[#19864e] sm:ml-8">Derniers Match</h1>
         </div>
 
         {% if teamMatchResults is not empty %}
