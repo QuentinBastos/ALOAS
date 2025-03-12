@@ -34,7 +34,7 @@ class Tournament
     private Collection $teamMatchResults;
 
     #[ORM\Column(type: 'json', nullable: true)]
-    private ?array $metadata = [];
+    private ?array $metadata;
 
     public function __construct()
     {
