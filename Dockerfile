@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
   dos2unix \
   curl \
   default-mysql-client \
-  libmysqlclient-dev && \
+  libmariadb-dev && \
   apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update && apt-get upgrade -y && \
