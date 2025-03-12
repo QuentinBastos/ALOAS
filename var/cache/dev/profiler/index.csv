@@ -52,3 +52,10 @@ ef2363,172.19.0.1,GET,http://127.0.0.1/,1739307539,,200,request
 93f45c,172.19.0.1,GET,http://127.0.0.1/,1739353444,,200,request
 5defd3,172.19.0.1,GET,http://127.0.0.1/,1739353530,,200,request
 8b2d32,172.19.0.1,GET,http://127.0.0.1/,1741767955,,200,request
+98cf15,172.19.0.1,GET,http://127.0.0.1/,1741777366,,200,request
+7234d5,172.19.0.1,GET,http://127.0.0.1/deploy/after-deploy-token-2U3BSDNFISDKO,1741777390,,200,request
+0f753e,172.19.0.1,GET,http://127.0.0.1/favicon.ico,1741777391,1bf43c,404,request
+1bf43c,172.19.0.1,GET,http://127.0.0.1/favicon.ico,1741777391,,404,request
+48d28b,172.19.0.1,GET,http://127.0.0.1/deploy/after-deploy-token-2U3BSDNFISDKO,1741777396,,200,request
+b8cfcc,172.19.0.1,GET,http://127.0.0.1/deploy?after-deploy-token-2U3BSDNFISDKO=,1741777483,622d1b,404,request
+622d1b,172.19.0.1,GET,http://127.0.0.1/deploy?after-deploy-token-2U3BSDNFISDKO=,1741777483,,404,request

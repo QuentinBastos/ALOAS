@@ -4,6 +4,8 @@
 
 return [
     'app_home' => [[], ['_controller' => 'App\\Controller\\DefaultController::index'], [], [['text', '/']], [], [], []],
+    'app_deploy' => [['token'], ['_controller' => 'App\\Controller\\Deploy\\DeploymentController::deploy'], [], [['variable', '/', '[^/]++', 'token', true], ['text', '/deploy']], [], [], []],
+    'app_deploy_test' => [[], ['_controller' => 'App\\Controller\\Deploy\\DeploymentController::deployTest'], [], [['text', '/deploy-test']], [], [], []],
     'app_register' => [[], ['_controller' => 'App\\Controller\\Security\\RegistrationController::register'], [], [['text', '/register']], [], [], []],
     'app_login' => [[], ['_controller' => 'App\\Controller\\Security\\SecurityController::login'], [], [['text', '/login']], [], [], []],
     'app_logout' => [[], ['_controller' => 'App\\Controller\\Security\\SecurityController::logout'], [], [['text', '/logout']], [], [], []],
@@ -20,6 +22,8 @@ return [
     'app_video_score' => [[], ['_controller' => 'App\\Controller\\Video\\VideoController::addScore'], [], [['text', '/video/add-score']], [], [], []],
     'app_video_help' => [[], ['_controller' => 'App\\Controller\\Video\\VideoController::help'], [], [['text', '/video/help']], [], [], []],
     'App\Controller\DefaultController::index' => [[], ['_controller' => 'App\\Controller\\DefaultController::index'], [], [['text', '/']], [], [], []],
+    'App\Controller\Deploy\DeploymentController::deploy' => [['token'], ['_controller' => 'App\\Controller\\Deploy\\DeploymentController::deploy'], [], [['variable', '/', '[^/]++', 'token', true], ['text', '/deploy']], [], [], []],
+    'App\Controller\Deploy\DeploymentController::deployTest' => [[], ['_controller' => 'App\\Controller\\Deploy\\DeploymentController::deployTest'], [], [['text', '/deploy-test']], [], [], []],
     'App\Controller\Security\RegistrationController::register' => [[], ['_controller' => 'App\\Controller\\Security\\RegistrationController::register'], [], [['text', '/register']], [], [], []],
     'App\Controller\Security\SecurityController::login' => [[], ['_controller' => 'App\\Controller\\Security\\SecurityController::login'], [], [['text', '/login']], [], [], []],
     'App\Controller\Security\SecurityController::logout' => [[], ['_controller' => 'App\\Controller\\Security\\SecurityController::logout'], [], [['text', '/logout']], [], [], []],

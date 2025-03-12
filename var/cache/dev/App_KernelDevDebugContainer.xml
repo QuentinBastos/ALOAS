@@ -377,6 +377,13 @@
         <argument type="service" id=".service_locator.QaaoWjx.App\Controller\DefaultController"/>
       </call>
     </service>
+    <service id="App\Controller\Deploy\DeploymentController" class="App\Controller\Deploy\DeploymentController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.QaaoWjx.App\Controller\Deploy\DeploymentController"/>
+      </call>
+    </service>
     <service id="App\Controller\Security\RegistrationController" class="App\Controller\Security\RegistrationController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="container.service_subscriber"/>
@@ -7397,6 +7404,9 @@
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\DefaultController" class="App\Controller\DefaultController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\DefaultController" class="App\Controller\DefaultController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\DefaultController" class="App\Controller\DefaultController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\Deploy\DeploymentController" class="App\Controller\Deploy\DeploymentController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\Deploy\DeploymentController" class="App\Controller\Deploy\DeploymentController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\Deploy\DeploymentController" class="App\Controller\Deploy\DeploymentController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\Security\RegistrationController" class="App\Controller\Security\RegistrationController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\Security\RegistrationController" class="App\Controller\Security\RegistrationController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\Security\RegistrationController" class="App\Controller\Security\RegistrationController" autowire="true" autoconfigure="true" abstract="true"/>
@@ -8597,6 +8607,12 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.QaaoWjx" method="withContext"/>
     </service>
+    <service id=".service_locator.QaaoWjx.App\Controller\Deploy\DeploymentController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\Deploy\DeploymentController"/>
+      <argument>App\Controller\Deploy\DeploymentController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.QaaoWjx" method="withContext"/>
+    </service>
     <service id=".service_locator.QaaoWjx.App\Controller\Security\RegistrationController" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\Security\RegistrationController"/>
       <argument>App\Controller\Security\RegistrationController</argument>
@@ -8817,6 +8833,7 @@
         <argument type="collection">
           <argument>App\Kernel</argument>
           <argument>App\Controller\DefaultController</argument>
+          <argument>App\Controller\Deploy\DeploymentController</argument>
           <argument>App\Controller\Security\RegistrationController</argument>
           <argument>App\Controller\Security\SecurityController</argument>
           <argument>App\Controller\TeamController</argument>

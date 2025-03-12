@@ -49,14 +49,15 @@ return [
                         .')'
                     .')'
                 .')'
+                .'|/deploy/([^/]++)(*:218)'
                 .'|/t(?'
                     .'|eam/(?'
-                        .'|add/([^/]++)(*:226)'
-                        .'|list/([^/]++)(*:247)'
+                        .'|add/([^/]++)(*:250)'
+                        .'|list/([^/]++)(*:271)'
                     .')'
                     .'|ournament/([^/]++)(?'
-                        .'|(*:277)'
-                        .'|/update\\-scores(*:300)'
+                        .'|(*:301)'
+                        .'|/update\\-scores(*:324)'
                     .')'
                 .')'
             .')/?$}sDu',
@@ -70,10 +71,11 @@ return [
         168 => [[['_route' => '_profiler_exception', '_controller' => 'web_profiler.controller.exception_panel::body'], ['token'], null, null, false, false, null]],
         181 => [[['_route' => '_profiler_exception_css', '_controller' => 'web_profiler.controller.exception_panel::stylesheet'], ['token'], null, null, false, false, null]],
         191 => [[['_route' => '_profiler', '_controller' => 'web_profiler.controller.profiler::panelAction'], ['token'], null, null, false, true, null]],
-        226 => [[['_route' => 'app_team_add', '_controller' => 'App\\Controller\\TeamController::add'], ['tournamentId'], null, null, false, true, null]],
-        247 => [[['_route' => 'app_team_show_all', '_controller' => 'App\\Controller\\TeamController::showAll'], ['tournamentId'], null, null, false, true, null]],
-        277 => [[['_route' => 'app_tournament_show', '_controller' => 'App\\Controller\\TournamentController::show'], ['id'], null, null, false, true, null]],
-        300 => [
+        218 => [[['_route' => 'app_deploy', '_controller' => 'App\\Controller\\Deploy\\DeploymentController::deploy'], ['token'], ['GET' => 0], null, false, true, null]],
+        250 => [[['_route' => 'app_team_add', '_controller' => 'App\\Controller\\TeamController::add'], ['tournamentId'], null, null, false, true, null]],
+        271 => [[['_route' => 'app_team_show_all', '_controller' => 'App\\Controller\\TeamController::showAll'], ['tournamentId'], null, null, false, true, null]],
+        301 => [[['_route' => 'app_tournament_show', '_controller' => 'App\\Controller\\TournamentController::show'], ['id'], null, null, false, true, null]],
+        324 => [
             [['_route' => 'app_tournament_update_scores', '_controller' => 'App\\Controller\\TournamentController::updateScores'], ['id'], ['POST' => 0], null, false, false, null],
             [null, null, null, null, false, false, 0],
         ],
