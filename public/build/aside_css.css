@@ -1,0 +1,45 @@
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].oneOf[1].use[2]!./node_modules/resolve-url-loader/index.js??ruleSet[1].rules[4].oneOf[1].use[3]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].oneOf[1].use[4]!./assets/styles/aside.scss ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.aside {
+  width: 310px;
+  flex-shrink: 0;
+}
+
+.titleVideo {
+  font-weight: 500;
+  color: gray;
+}
+
+.textVideo {
+  padding: 0.8rem 1rem 0 1rem;
+  font-weight: 300;
+  color: black;
+}
+.textVideo > i {
+  padding-right: 0.5rem;
+  color: #33694D;
+}
+
+.insideAside {
+  width: 310px;
+  border-left: 1px solid rgba(0, 0, 0, 0.12);
+  left: auto;
+  right: 0;
+  top: 0;
+  flex: 1 0 auto;
+  height: 100%;
+  display: flex;
+  outline: 0;
+  z-index: 1200;
+  position: fixed;
+  overflow-y: auto;
+  flex-direction: column;
+  -webkit-overflow-scrolling: touch;
+  color: rgba(0, 0, 0, 0.87);
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  background-color: #fff;
+  box-shadow: none;
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXNpZGVfY3NzLmNzcyIsIm1hcHBpbmdzIjoiOzs7QUFFQTtFQUNFO0VBQ0E7QUFERjs7QUFJQTtFQUNFO0VBQ0EsV0NEVztBREFiOztBQUlBO0VBQ0U7RUFDQTtFQUNBLFlDTk07QURLUjtBQUVFO0VBQ0U7RUFDQSxjQ2pCWTtBRGlCaEI7O0FBSUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7QUFERixDIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vYXNzZXRzL3N0eWxlcy9hc2lkZS5zY3NzIiwid2VicGFjazovLy8uL2Fzc2V0cy9zdHlsZXMvX3ZhcmlhYmxlcy5zY3NzIl0sInNvdXJjZXNDb250ZW50IjpbIi5hc2lkZSB7XG4gIHdpZHRoOiAzMTBweDtcbiAgZmxleC1zaHJpbms6IDA7XG59XG5cbi50aXRsZVZpZGVvIHtcbiAgZm9udC13ZWlnaHQ6IDUwMDtcbiAgY29sb3I6IGdyYXk7XG59XG5cbi50ZXh0VmlkZW8ge1xuICBwYWRkaW5nOiAwLjhyZW0gMXJlbSAwIDFyZW07XG4gIGZvbnQtd2VpZ2h0OiAzMDA7XG4gIGNvbG9yOiBibGFjaztcbn1cbi50ZXh0VmlkZW8gPiBpIHtcbiAgcGFkZGluZy1yaWdodDogMC41cmVtO1xuICBjb2xvcjogIzMzNjk0RDtcbn1cblxuLmluc2lkZUFzaWRlIHtcbiAgd2lkdGg6IDMxMHB4O1xuICBib3JkZXItbGVmdDogMXB4IHNvbGlkIHJnYmEoMCwgMCwgMCwgMC4xMik7XG4gIGxlZnQ6IGF1dG87XG4gIHJpZ2h0OiAwO1xuICB0b3A6IDA7XG4gIGZsZXg6IDEgMCBhdXRvO1xuICBoZWlnaHQ6IDEwMCU7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIG91dGxpbmU6IDA7XG4gIHotaW5kZXg6IDEyMDA7XG4gIHBvc2l0aW9uOiBmaXhlZDtcbiAgb3ZlcmZsb3cteTogYXV0bztcbiAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcbiAgLXdlYmtpdC1vdmVyZmxvdy1zY3JvbGxpbmc6IHRvdWNoO1xuICBjb2xvcjogcmdiYSgwLCAwLCAwLCAwLjg3KTtcbiAgdHJhbnNpdGlvbjogYm94LXNoYWRvdyAzMDBtcyBjdWJpYy1iZXppZXIoMC40LCAwLCAwLjIsIDEpIDBtcztcbiAgYmFja2dyb3VuZC1jb2xvcjogI2ZmZjtcbiAgYm94LXNoYWRvdzogbm9uZTtcbn0iXSwibmFtZXMiOltdLCJzb3VyY2VSb290IjoiIn0=*/
