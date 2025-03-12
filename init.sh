@@ -4,18 +4,16 @@ set -e
 
 echo "🔄 Starting initialization..."
 
-# Wait for PostgreSQL to be available
-echo "⏳ Checking PostgreSQL connection..."
-until PGPASSWORD="$DB_PASS" psql -h "$DB_HOST" -U "$DB_USER" -d "$DB_NAME" -c "SELECT 1" &>/dev/null; do
-    >&2 echo "🔄 PostgreSQL is unavailable - sleeping"
-    sleep 3
+echo "⏳ Checking MySQL connection..."
+until mysql -h db -u root -e "SELECT 1"; do
+  >&2 echo "MySQL is unavailable - sleeping"
+  sleep 3
 done
 
-echo "✅ PostgreSQL is available!"
 
-# Run migrations
-echo "⚡ Running database migrations..."
+mysql -h db -u root -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;"
+
+cd /var/www
 php bin/console doctrine:migrations:migrate --no-interaction
-
 echo "✅ Migrations complete!"
 echo "🎉 Initialization complete!"

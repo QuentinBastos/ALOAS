@@ -9,8 +9,8 @@ RUN apt-get update && apt-get install -y \
   nano \
   dos2unix \
   curl \
-  postgresql-client \
-  libpq-dev && \
+  default-mysql-client \
+  libmysqlclient-dev && \
   apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update && apt-get upgrade -y && \
@@ -20,7 +20,7 @@ RUN apt-get update && apt-get upgrade -y && \
 
 RUN npm install -g npm
 
-RUN docker-php-ext-install pdo pdo_pgsql zip gd
+RUN docker-php-ext-install pdo pdo_mysql zip gd
 
 WORKDIR /var/www/html
 
