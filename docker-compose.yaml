@@ -11,7 +11,7 @@ services:
         condition: service_healthy
     environment:
       - APP_ENV=${APP_ENV}
-      - DATABASE_URL=mysql://root:@db:3306/Aloas?serverVersion=5.7
+      - DATABASE_URL=mysql://root:@db:3306/aloastg519?serverVersion=5.7
       - DB_HOST=${DB_HOST}
       - DB_USER=${DB_USER}
       - DB_PASS=${DB_PASS}
@@ -23,7 +23,7 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_DATABASE: Aloas
+      MYSQL_DATABASE: aloastg519
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
@@ -37,7 +37,7 @@ services:
       - "8081:80"
     environment:
       PMA_HOST: db
-      MYSQL_DATABASE: Aloas
+      MYSQL_DATABASE: aloastg519
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
 
   npm:
