@@ -5,6 +5,7 @@ namespace App\Controller\Deploy;
 use Doctrine\Migrations\DependencyFactory;
 use Doctrine\Migrations\Tools\Console\Command\MigrateCommand;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Exception\ExceptionInterface;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
@@ -31,16 +32,22 @@ class DeploymentController extends AbstractController
 
         try {
             // Create migration command
-            $command = new MigrateCommand($dependencyFactory);
+            $application = new Application();
+            $application->setAutoExit(false);
+
+            $application->add(new MigrateCommand($dependencyFactory));
 
             // Set up input with no interaction
-            $input = new ArrayInput(['--no-interaction' => true]);
+            $input = new ArrayInput([
+                'command' => 'migrations:migrate',
+                '--no-interaction' => true,
+            ]);
 
             // Set up output buffer to capture results
             $output = new BufferedOutput();
 
             // Run the command
-            $returnCode = $command->run($input, $output);
+            $returnCode = $application->run($input, $output);
 
             // Get the output
             $content = $output->fetch();
