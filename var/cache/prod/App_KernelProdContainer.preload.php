@@ -679,3 +679,13 @@ $classes[] = 'Symfony\\Bundle\\FrameworkBundle\\Routing\\RedirectableCompiledUrl
 $classes[] = 'Symfony\\Component\\Validator\\Mapping\\ClassMetadata';
 $classes[] = 'Symfony\\Component\\Form\\Extension\\Validator\\Constraints\\Form';
 $preloaded = Preloader::preload($classes, $preloaded);
+require_once __DIR__.'/doctrine/orm/Proxies/__CG__AppEntitySport.php';
+require_once __DIR__.'/doctrine/orm/Proxies/__CG__AppEntityTeam.php';
+require_once __DIR__.'/doctrine/orm/Proxies/__CG__AppEntityTeamMatchResult.php';
+require_once __DIR__.'/doctrine/orm/Proxies/__CG__AppEntityTournament.php';
+require_once __DIR__.'/doctrine/orm/Proxies/__CG__AppEntityUser.php';
+
+$classes = [];
+$classes[] = 'Symfony\\Component\\Validator\\Mapping\\ClassMetadata';
+$classes[] = 'Symfony\\Component\\Form\\Extension\\Validator\\Constraints\\Form';
+$preloaded = Preloader::preload($classes, $preloaded);
