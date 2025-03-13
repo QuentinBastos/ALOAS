@@ -74,3 +74,7 @@ b752d1,172.19.0.1,GET,http://127.0.0.1/deploy/after-deploy-token-2U3BSDNFISDKO,1
 31d36f,172.19.0.1,GET,http://127.0.0.1/deploy/after-deploy-token-2U3BSDNFISDKO,1741778153,,500,request
 e4250c,172.19.0.1,GET,http://127.0.0.1/deploy/after-deploy-token-2U3BSDNFISDKO,1741778162,,200,request
 341efd,172.19.0.1,GET,http://127.0.0.1/deploy/after-deploy-token-2U3BSDNFISDKO,1741778196,,200,request
+92dd43,172.19.0.1,GET,http://127.0.0.1/deploy/after-deploy-token-2U3BSDNFISDKO,1741778700,,200,request
+e1c6c3,172.19.0.1,GET,http://127.0.0.1/favicon.ico,1741778700,1b22fb,404,request
+1b22fb,172.19.0.1,GET,http://127.0.0.1/favicon.ico,1741778700,,404,request
+16222c,172.19.0.1,GET,http://127.0.0.1/deploy/after-deploy-token-2U3BSDNFISDKO,1741778701,,200,request
