@@ -14,10 +14,6 @@ DirectoryIndex index.php
     RewriteCond %{REQUEST_URI} ^/(build|bundles|uploads|assets)/ [NC]
     RewriteRule ^ - [L]
 
-    # Allow access to built assets
-    RewriteCond %{REQUEST_URI} ^/build/.*\.(gif|jpg|jpeg|png|css|js|mp4|svg|woff2|woff|ttf|eot)$ [NC]
-    RewriteRule ^ - [L]
-
     RewriteCond %{REQUEST_URI}::$0 ^(/.+)/(.*)::\2$
     RewriteRule .* - [E=BASE:%1]
 
