@@ -1,0 +1,1 @@
+.tournament-tree{align-items:center;display:flex;flex-direction:column}.phase{margin:20px 0;text-align:center}.matches{display:flex;gap:20px;justify-content:center}select{border-color:var(--bg-green-light);border-radius:7px;border-width:3px;padding:2px 18px 2px 4px}select:hover{opacity:100%}

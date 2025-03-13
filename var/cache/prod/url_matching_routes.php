@@ -27,24 +27,30 @@ return [
     [ // $regexpList
         0 => '{^(?'
                 .'|/deploy/([^/]++)(*:23)'
+                .'|/import\\-(?'
+                    .'|sports/([^/]++)(*:57)'
+                    .'|user/([^/]++)/([^/]++)/([^/]++)(*:95)'
+                .')'
                 .'|/t(?'
                     .'|eam/(?'
-                        .'|add/([^/]++)(*:54)'
-                        .'|list/([^/]++)(*:74)'
+                        .'|add/([^/]++)(*:127)'
+                        .'|list/([^/]++)(*:148)'
                     .')'
                     .'|ournament/([^/]++)(?'
-                        .'|(*:103)'
-                        .'|/update\\-scores(*:126)'
+                        .'|(*:178)'
+                        .'|/update\\-scores(*:201)'
                     .')'
                 .')'
             .')/?$}sDu',
     ],
     [ // $dynamicRoutes
         23 => [[['_route' => 'app_deploy', '_controller' => 'App\\Controller\\Deploy\\DeploymentController::deploy'], ['token'], ['GET' => 0], null, false, true, null]],
-        54 => [[['_route' => 'app_team_add', '_controller' => 'App\\Controller\\TeamController::add'], ['tournamentId'], null, null, false, true, null]],
-        74 => [[['_route' => 'app_team_show_all', '_controller' => 'App\\Controller\\TeamController::showAll'], ['tournamentId'], null, null, false, true, null]],
-        103 => [[['_route' => 'app_tournament_show', '_controller' => 'App\\Controller\\TournamentController::show'], ['id'], null, null, false, true, null]],
-        126 => [
+        57 => [[['_route' => 'app_import_sports', '_controller' => 'App\\Controller\\Deploy\\DeploymentController::importSports'], ['token'], ['GET' => 0], null, false, true, null]],
+        95 => [[['_route' => 'app_import_user', '_controller' => 'App\\Controller\\Deploy\\DeploymentController::importUser'], ['token', 'username', 'password'], ['GET' => 0], null, false, true, null]],
+        127 => [[['_route' => 'app_team_add', '_controller' => 'App\\Controller\\TeamController::add'], ['tournamentId'], null, null, false, true, null]],
+        148 => [[['_route' => 'app_team_show_all', '_controller' => 'App\\Controller\\TeamController::showAll'], ['tournamentId'], null, null, false, true, null]],
+        178 => [[['_route' => 'app_tournament_show', '_controller' => 'App\\Controller\\TournamentController::show'], ['id'], null, null, false, true, null]],
+        201 => [
             [['_route' => 'app_tournament_update_scores', '_controller' => 'App\\Controller\\TournamentController::updateScores'], ['id'], ['POST' => 0], null, false, false, null],
             [null, null, null, null, false, false, 0],
         ],

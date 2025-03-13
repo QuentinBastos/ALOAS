@@ -5,6 +5,8 @@
 return [
     'app_home' => [[], ['_controller' => 'App\\Controller\\DefaultController::index'], [], [['text', '/']], [], [], []],
     'app_deploy' => [['token'], ['_controller' => 'App\\Controller\\Deploy\\DeploymentController::deploy'], [], [['variable', '/', '[^/]++', 'token', true], ['text', '/deploy']], [], [], []],
+    'app_import_sports' => [['token'], ['_controller' => 'App\\Controller\\Deploy\\DeploymentController::importSports'], [], [['variable', '/', '[^/]++', 'token', true], ['text', '/import-sports']], [], [], []],
+    'app_import_user' => [['token', 'username', 'password'], ['_controller' => 'App\\Controller\\Deploy\\DeploymentController::importUser'], [], [['variable', '/', '[^/]++', 'password', true], ['variable', '/', '[^/]++', 'username', true], ['variable', '/', '[^/]++', 'token', true], ['text', '/import-user']], [], [], []],
     'app_deploy_test' => [[], ['_controller' => 'App\\Controller\\Deploy\\DeploymentController::deployTest'], [], [['text', '/deploy-test']], [], [], []],
     'app_register' => [[], ['_controller' => 'App\\Controller\\Security\\RegistrationController::register'], [], [['text', '/register']], [], [], []],
     'app_login' => [[], ['_controller' => 'App\\Controller\\Security\\SecurityController::login'], [], [['text', '/login']], [], [], []],
@@ -23,6 +25,8 @@ return [
     'app_video_help' => [[], ['_controller' => 'App\\Controller\\Video\\VideoController::help'], [], [['text', '/video/help']], [], [], []],
     'App\Controller\DefaultController::index' => [[], ['_controller' => 'App\\Controller\\DefaultController::index'], [], [['text', '/']], [], [], []],
     'App\Controller\Deploy\DeploymentController::deploy' => [['token'], ['_controller' => 'App\\Controller\\Deploy\\DeploymentController::deploy'], [], [['variable', '/', '[^/]++', 'token', true], ['text', '/deploy']], [], [], []],
+    'App\Controller\Deploy\DeploymentController::importSports' => [['token'], ['_controller' => 'App\\Controller\\Deploy\\DeploymentController::importSports'], [], [['variable', '/', '[^/]++', 'token', true], ['text', '/import-sports']], [], [], []],
+    'App\Controller\Deploy\DeploymentController::importUser' => [['token', 'username', 'password'], ['_controller' => 'App\\Controller\\Deploy\\DeploymentController::importUser'], [], [['variable', '/', '[^/]++', 'password', true], ['variable', '/', '[^/]++', 'username', true], ['variable', '/', '[^/]++', 'token', true], ['text', '/import-user']], [], [], []],
     'App\Controller\Deploy\DeploymentController::deployTest' => [[], ['_controller' => 'App\\Controller\\Deploy\\DeploymentController::deployTest'], [], [['text', '/deploy-test']], [], [], []],
     'App\Controller\Security\RegistrationController::register' => [[], ['_controller' => 'App\\Controller\\Security\\RegistrationController::register'], [], [['text', '/register']], [], [], []],
     'App\Controller\Security\SecurityController::login' => [[], ['_controller' => 'App\\Controller\\Security\\SecurityController::login'], [], [['text', '/login']], [], [], []],

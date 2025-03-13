@@ -1,5 +1,4 @@
-DirectoryIndex public/index.php
-
+DirectoryIndex index.php
 
 <IfModule mod_negotiation.c>
     Options -MultiViews
@@ -7,13 +6,12 @@ DirectoryIndex public/index.php
 
 <IfModule mod_rewrite.c>
     Options +SymLinksIfOwnerMatch
-
     RewriteEngine On
 
     RewriteCond %{REQUEST_FILENAME} -f
     RewriteRule ^ - [L]
 
-    RewriteCond %{REQUEST_URI} ^/assets/.*\.(gif|jpg|jpeg|png|css|js|mp4|svg)$ [NC]
+    RewriteCond %{REQUEST_URI} ^/(build|bundles|uploads|assets)/ [NC]
     RewriteRule ^ - [L]
 
     RewriteCond %{REQUEST_URI}::$0 ^(/.+)/(.*)::\2$
@@ -23,14 +21,15 @@ DirectoryIndex public/index.php
     RewriteRule ^ - [E=HTTP_AUTHORIZATION:%0]
 
     RewriteCond %{ENV:REDIRECT_STATUS} =""
-    RewriteRule ^index\.php(?:/(.*)|$) %{ENV:BASE}/public/$1 [R=301,L]
+    RewriteRule ^index\.php(?:/(.*)|$) %{ENV:BASE}/$1 [R=301,L]
 
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ %{ENV:BASE}/public/index.php [L]
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ %{ENV:BASE}/index.php [L]
 </IfModule>
 
 <IfModule !mod_rewrite.c>
     <IfModule mod_alias.c>
-        RedirectMatch 307 ^/$ /public/index.php/
+        RedirectMatch 307 ^/$ /index.php/
     </IfModule>
 </IfModule>

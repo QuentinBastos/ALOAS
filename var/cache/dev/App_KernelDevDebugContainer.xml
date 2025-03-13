@@ -380,6 +380,8 @@
     <service id="App\Controller\Deploy\DeploymentController" class="App\Controller\Deploy\DeploymentController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="container.service_subscriber"/>
+      <argument type="service" id="App\Command\ImportSportsCommand"/>
+      <argument type="service" id="App\Command\ImportUserCommand"/>
       <call method="setContainer">
         <argument type="service" id=".service_locator.QaaoWjx.App\Controller\Deploy\DeploymentController"/>
       </call>
