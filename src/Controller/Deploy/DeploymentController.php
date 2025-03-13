@@ -2,6 +2,8 @@
 
 namespace App\Controller\Deploy;
 
+use App\Command\ImportSportsCommand;
+use App\Command\ImportUserCommand;
 use Doctrine\Migrations\DependencyFactory;
 use Doctrine\Migrations\Tools\Console\Command\MigrateCommand;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,41 +17,42 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DeploymentController extends AbstractController
 {
+    private ImportSportsCommand $importSportsCommand;
+    private ImportUserCommand $importUserCommand;
+
+    public function __construct(ImportSportsCommand $importSportsCommand, ImportUserCommand $importUserCommand)
+    {
+        $this->importSportsCommand = $importSportsCommand;
+        $this->importUserCommand = $importUserCommand;
+    }
+
     /**
      * @throws ExceptionInterface
      */
     #[Route('/deploy/{token}', name: 'app_deploy', methods: ['GET'])]
     public function deploy(
-        Request $request,
-        string $token,
+        Request           $request,
+        string            $token,
         DependencyFactory $dependencyFactory
-    ): Response {
-
+    ): Response
+    {
         $envToken = $_ENV['DEPLOY_TOKEN'];
         if ($token != $envToken) {
             throw $this->createAccessDeniedException('Invalid deployment token');
         }
 
         try {
-            // Create migration command
             $application = new Application();
             $application->setAutoExit(false);
-
             $application->add(new MigrateCommand($dependencyFactory));
 
-            // Set up input with no interaction
             $input = new ArrayInput([
                 'command' => 'migrations:migrate',
                 '--no-interaction' => true,
             ]);
 
-            // Set up output buffer to capture results
             $output = new BufferedOutput();
-
-            // Run the command
             $returnCode = $application->run($input, $output);
-
-            // Get the output
             $content = $output->fetch();
 
             return new Response(
@@ -60,6 +63,86 @@ class DeploymentController extends AbstractController
         } catch (\Exception $e) {
             return new Response(
                 "Error running migrations: " . $e->getMessage(),
+                500,
+                ['Content-Type' => 'text/plain']
+            );
+        }
+    }
+
+    #[Route('/import-sports/{token}', name: 'app_import_sports', methods: ['GET'])]
+    public function importSports(
+        Request $request,
+        string  $token
+    ): Response
+    {
+        $envToken = $_ENV['IMPORT_TOKEN'];
+        if ($token != $envToken) {
+            throw $this->createAccessDeniedException('Invalid import token');
+        }
+
+        try {
+            $application = new Application();
+            $application->setAutoExit(false);
+            $application->add($this->importSportsCommand);
+
+            $input = new ArrayInput([
+                'command' => 'app:import-sports',
+            ]);
+
+            $output = new BufferedOutput();
+            $returnCode = $application->run($input, $output);
+            $content = $output->fetch();
+
+            return new Response(
+                "Import completed with return code: $returnCode\n\n$content",
+                200,
+                ['Content-Type' => 'text/plain']
+            );
+        } catch (\Exception $e) {
+            return new Response(
+                "Error running import: " . $e->getMessage(),
+                500,
+                ['Content-Type' => 'text/plain']
+            );
+        }
+    }
+
+    #[Route('/import-user/{token}/{username}/{password}', name: 'app_import_user', methods: ['GET'])]
+    public function importUser(
+        Request $request,
+        string  $token,
+        string  $username,
+        string  $password
+    ): Response
+    {
+        $envToken = $_ENV['IMPORT_TOKEN'];
+        if ($token != $envToken) {
+            throw $this->createAccessDeniedException('Invalid import token');
+        }
+
+        try {
+            $application = new Application();
+            $application->setAutoExit(false);
+            $application->add($this->importUserCommand);
+
+            $input = new ArrayInput([
+                'command' => 'app:import-user',
+                'username' => $username,
+                'password' => $password,
+            ]);
+
+            $output = new BufferedOutput();
+            $returnCode = $application->run($input, $output);
+            $content = $output->fetch();
+
+            return new Response(
+                "User import completed with return code: $returnCode\n\n$content",
+                200,
+                ['Content-Type' => 'text/plain']
+            );
+        } catch (\Exception $e) {
+            return new Response(
+                "Error running user import: " . $e->getMessage(),
                 500,
                 ['Content-Type' => 'text/plain']
             );
