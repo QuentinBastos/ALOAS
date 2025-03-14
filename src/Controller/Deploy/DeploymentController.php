@@ -67,7 +67,7 @@ class DeploymentController extends AbstractController
     #[Route('/import-sports/{token}', name: 'app_import_sports', methods: ['GET'])]
     public function importSports(Request $request, string $token): Response
     {
-        $envToken = $_ENV['IMPORT_TOKEN'];
+        $envToken = $_ENV['DEPLOY_TOKEN'];
         if ($token != $envToken) {
             throw $this->createAccessDeniedException('Invalid import token');
         }
@@ -102,7 +102,7 @@ class DeploymentController extends AbstractController
     #[Route('/import-user/{token}/{username}/{password}', name: 'app_import_user', methods: ['GET'])]
     public function importUser(Request $request, string $token, string $username, string $password): Response
     {
-        $envToken = $_ENV['IMPORT_TOKEN'];
+        $envToken = $_ENV['DEPLOY_TOKEN'];
         if ($token != $envToken) {
             throw $this->createAccessDeniedException('Invalid import token');
         }
