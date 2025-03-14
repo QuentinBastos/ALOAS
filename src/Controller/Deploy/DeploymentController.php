@@ -14,27 +14,24 @@ use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[IsGranted('IS_ANONYMOUS')]
 class DeploymentController extends AbstractController
 {
-    private ImportSportsCommand $importSportsCommand;
-    private ImportUserCommand $importUserCommand;
 
-    public function __construct(ImportSportsCommand $importSportsCommand, ImportUserCommand $importUserCommand)
+    public function __construct(
+        private readonly ImportSportsCommand $importSportsCommand,
+        private readonly ImportUserCommand   $importUserCommand,
+    )
     {
-        $this->importSportsCommand = $importSportsCommand;
-        $this->importUserCommand = $importUserCommand;
     }
 
     /**
      * @throws ExceptionInterface
      */
     #[Route('/deploy/{token}', name: 'app_deploy', methods: ['GET'])]
-    public function deploy(
-        Request           $request,
-        string            $token,
-        DependencyFactory $dependencyFactory
-    ): Response
+    public function deploy(Request $request, string $token, DependencyFactory $dependencyFactory): Response
     {
         $envToken = $_ENV['DEPLOY_TOKEN'];
         if ($token != $envToken) {
@@ -70,10 +67,7 @@ class DeploymentController extends AbstractController
     }
 
     #[Route('/import-sports/{token}', name: 'app_import_sports', methods: ['GET'])]
-    public function importSports(
-        Request $request,
-        string  $token
-    ): Response
+    public function importSports(Request $request, string $token): Response
     {
         $envToken = $_ENV['IMPORT_TOKEN'];
         if ($token != $envToken) {
@@ -108,12 +102,7 @@ class DeploymentController extends AbstractController
     }
 
     #[Route('/import-user/{token}/{username}/{password}', name: 'app_import_user', methods: ['GET'])]
-    public function importUser(
-        Request $request,
-        string  $token,
-        string  $username,
-        string  $password
-    ): Response
+    public function importUser(Request $request, string $token, string $username, string $password): Response
     {
         $envToken = $_ENV['IMPORT_TOKEN'];
         if ($token != $envToken) {
